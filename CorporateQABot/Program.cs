@@ -12,7 +12,8 @@ var class1 = new OllamaModelService();
 
 //await class1.RunOllamaModelAsync(Class1.OllamaQwenModelName, "List three benefits of using .NET for AI development:");
 //await class1.GenerateOllamaChatAsync(OllamaModelService.OllamaQwenModelName);
-await class1.PromptTemplate();
+//await class1.PromptTemplateFunc();
+await class1.ChatPromptTemplates();
 
 //Console.WriteLine("Hello, World!");
 

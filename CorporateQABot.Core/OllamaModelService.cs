@@ -1,9 +1,11 @@
 ﻿//using LangChain.Providers;
 using LangChain.Prompts;
 using LangChain.Prompts;
+using LangChain.Prompts.Base;
 using LangChain.Providers;
 using LangChain.Providers.Ollama;
 using LangChain.Schema;
+using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 
 
@@ -71,18 +73,29 @@ namespace CorporateQABot.Core
         }
 
         /// <summary>
-        /// Builds and formats a prompt template with dynamic values, then writes the rendered prompt to the console.
+        /// Demonstrates multiple ways to format prompt templates and submits the rendered prompts to the Gemma model.
         /// </summary>
-        /// <returns>A task that completes when the formatted prompt has been written to the console.</returns>
-        public async Task PromptTemplate()
+        /// <returns>A task that completes when the prompts have been formatted, logged, and sent to the model.</returns>
+        public async Task PromptTemplateFunc()
         {
-
-            var input = new PromptTemplateInput(
+            // one easy way to format a prompt
+            var oneFormatedPrompt = PromptTemplate.RenderTemplate(
                 "You are an expert in {topic}. Answer the following question with detail and clarity: {question}",
-               new List<string> { "topic", "question" });
+                TemplateFormatOptions.FString,
+                new Dictionary<string, object>
+                {
+                    ["topic"] = "cloud security",
+                    ["question"] = "What is Zero Trust, and why is it important for enterprise architects?"
+                });
 
-            // Define a reusable prompt template
-            var template = new PromptTemplate(input);
+            Console.WriteLine(oneFormatedPrompt);
+
+            await RunOllamaModelAsync(OllamaGemmaModelName, oneFormatedPrompt);
+
+            //*****************************************************************************//
+            // another way using PromptTemplate class
+            var template = PromptTemplate.FromTemplate(
+                "You are an expert in {topic}. Answer the following question with detail and clarity: {question}");
 
             var values = new InputValues(new Dictionary<string, object>
             {
@@ -94,6 +107,81 @@ namespace CorporateQABot.Core
             var formattedPrompt = await template.FormatAsync(values);
 
             Console.WriteLine(formattedPrompt);
+
+            await RunOllamaModelAsync(OllamaGemmaModelName, oneFormatedPrompt);
+
+            //*****************************************************************************//
+            // more complex way using PromptTemplateInput
+            var input = new PromptTemplateInput(
+                "You are an expert in {topic}. Answer the following question with detail and clarity: {question}",
+               new List<string> { "topic", "question" });
+
+            // Define a reusable prompt template
+            var hardTemplate = new PromptTemplate(input);
+
+            var hardValues = new InputValues(new Dictionary<string, object>
+            {
+                ["topic"] = "cloud security",
+                ["question"] = "What is Zero Trust, and why is it important for enterprise architects?"
+            });
+
+            // Format the prompt with runtime values
+            var hardFormattedPrompt = await hardTemplate.FormatAsync(hardValues);
+
+            Console.WriteLine(formattedPrompt);
+        }
+
+        /// <summary>
+        /// Creates static and dynamic chat prompt templates, formats them with runtime values, and invokes the Gemma model with the resulting prompts.
+        /// </summary>
+        /// <returns>A task that completes when both prompts have been emitted and the model responses retrieved.</returns>
+        /// <summary>
+        /// Creates static and dynamic chat prompt templates, formats them with runtime values, and invokes the Gemma model with the resulting prompts.
+        /// </summary>
+        /// <returns>A task that completes when both prompts have been emitted and the model responses retrieved.</returns>
+        public async Task ChatPromptTemplates()
+        {
+            // Static Chat Prompt Template
+            var chatPrompt = ChatPromptTemplate.FromPromptMessages([
+                SystemMessagePromptTemplate.FromTemplate(
+                "You are an AI financial advisor."),
+                 HumanMessagePromptTemplate.FromTemplate("What are the tax benefits of a Roth IRA?")
+            ]);
+
+            var formattedPrompt = await chatPrompt.FormatAsync(new InputValues(new Dictionary<string, object> { }));
+
+            Console.WriteLine(formattedPrompt);
+
+            await RunOllamaModelAsync(OllamaGemmaModelName, formattedPrompt);
+
+            //*****************************************************************************//
+            // Dynamic Chat Prompt Template
+            var dynamicChatTemplate = ChatPromptTemplate.FromPromptMessages([
+                SystemMessagePromptTemplate.FromTemplate(
+                "You are a helpful assistant specialized in {domain}."),
+                 HumanMessagePromptTemplate.FromTemplate(
+                     "{question}")
+            ]);
+
+            var values = new InputValues(new Dictionary<string, object>
+            {
+                ["domain"] = "human resources",
+                ["question"] = "How should we handle remote work requests?"
+            });
+
+            var chatMessage = await dynamicChatTemplate.FormatAsync(
+                new InputValues(
+                    new Dictionary<string, object>
+                    {
+                        ["domain"] = "human resources",
+                        ["question"] = "How should we handle remote work requests?"
+                    }
+                )
+            );
+
+            Console.WriteLine(chatMessage);
+
+            await RunOllamaModelAsync(OllamaGemmaModelName, chatMessage);
         }
 
         //public async Task Test1(string apiKey)

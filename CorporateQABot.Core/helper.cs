@@ -12,4 +12,16 @@ namespace CorporateQABot.Core
     {
 
     }
+
+    public class BasePromptTemplateInput(
+    IReadOnlyList<string> inputVariables,
+    Dictionary<string, object>? partialVariables = null)
+    : IBasePromptTemplateInput
+    {
+
+        public IReadOnlyList<string> InputVariables { get; private set; } = inputVariables;
+
+        /// <inheritdoc/>
+        public Dictionary<string, object> PartialVariables { get; private set; } = partialVariables ?? new();
+    }
 }
