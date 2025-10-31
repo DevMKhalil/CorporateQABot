@@ -1,12 +1,10 @@
-﻿//using LangChain.Providers;
-using LangChain.Prompts;
-using LangChain.Prompts;
+﻿using LangChain.Prompts;
 using LangChain.Prompts.Base;
 using LangChain.Providers;
 using LangChain.Providers.Ollama;
 using LangChain.Schema;
 using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
+using OllamaMsgExt = Ollama.StringExtensions;
 
 
 
@@ -15,7 +13,14 @@ namespace CorporateQABot.Core
 
     public class OllamaModelService
     {
+        /// <summary>
+        /// Default Gemma model identifier used by sample calls.
+        /// </summary>
         public const string OllamaGemmaModelName = "gemma2:2b-instruct-q4_K_M";
+
+        /// <summary>
+        /// Default Qwen model identifier used by sample calls.
+        /// </summary>
         public const string OllamaQwenModelName = "qwen3:1.7b-q4_K_M";
 
         /// <summary>
@@ -32,6 +37,40 @@ namespace CorporateQABot.Core
             {
                 var output = await aiModel.GenerateAsync(message);
                 Console.WriteLine(output);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sends a chat-style request constructed from an array of <see cref="Message"/> to the specified Ollama model.
+        /// The collection is converted to a <see cref="ChatRequest"/> before sending.
+        /// </summary>
+        /// <param name="modelName">Identifier of the Ollama model to invoke.</param>
+        /// <param name="Messages">Collection of <see cref="Message"/> objects that form the conversation history.</param>
+        /// <returns>
+        /// A task that resolves to the model's last message content as a <see cref="string"/>.
+        /// Returns the same content the underlying client exposes as <c>LastMessageContent</c>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="Messages"/> is <see langword="null"/> (propagated by helpers).</exception>
+        /// <exception cref="Exception">Propagates any exception thrown by the underlying Ollama client.</exception>
+        public async Task<string> RunOllamaModelAsync(string modelName, IReadOnlyCollection<Message> Messages,float temperature = (float)0.7)
+        {
+            var chat = ChatRequest.ToChatRequest(Messages);
+
+            var aiModel = new OllamaChatModel(new OllamaProvider(), modelName);
+            try
+            {
+                var chatSettings = OllamaChatSettings.Default;
+
+                chatSettings.Temperature = temperature;
+
+                var output = await aiModel.GenerateAsync(chat, chatSettings);
+
+                return output.LastMessageContent;
             }
             catch (Exception ex)
             {
@@ -182,6 +221,73 @@ namespace CorporateQABot.Core
             Console.WriteLine(chatMessage);
 
             await RunOllamaModelAsync(OllamaGemmaModelName, chatMessage);
+        }
+
+
+        /// <summary>
+        /// Builds a short, example conversation as a sequence of chat messages and sends it to the configured model.
+        /// </summary>
+        /// <remarks>
+        /// The method creates a `messages` array containing a sequence of messages with different roles using
+        /// the `AsSystemMessage`, `AsAiMessage`, and `AsHumanMessage` helpers. It writes the assembled messages to
+        /// the console for debugging/inspection and then invokes `RunModelAsync` to submit the conversation
+        /// to the `OllamaGemmaModelName`.
+        ///
+        /// The method does not catch exceptions that may originate from `RunModelAsync`; such exceptions will
+        /// propagate to the caller.
+        /// </remarks>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <exception cref="Exception">Propagates any exception thrown while sending the conversation to the model.</exception>
+        public async Task ConversationPromptTemplates()
+        {
+            var messages = new[]
+                {
+                    "You are a chief, you want to ask me some things to find out my favorite Asian dish".AsSystemMessage(),
+                    "Where are you from".AsAiMessage(),
+                    "Egypt".AsHumanMessage(),
+                    "Do you like spicy food?".AsAiMessage(),
+                    "Not too much".AsHumanMessage(),
+                    "Do you suffer from diabetes?".AsAiMessage(),
+                    "yes".AsHumanMessage()
+                };
+
+            await RunOllamaModelAsync(OllamaGemmaModelName, messages);
+        }
+
+        /// <summary>
+        /// Demonstrates continuing a conversation across multiple iterations:
+        /// - Sends the current message history to the model.
+        /// - Appends the model response to the history.
+        /// - Reads a user reply from the console and appends it as a human message.
+        /// The loop repeats several times and then asks a final question to produce a concluding response.
+        /// </summary>
+        /// <returns>A task that completes when the interactive conversation demonstration finishes.</returns>
+        /// <exception cref="Exception">Propagates any exception thrown by the underlying Ollama client or console I/O.</exception>
+        public async Task ContinuesConversationPromptTemplates()
+        {
+            var messages = new[]
+                {
+                    "You are a chief, you want to ask me some things to find out my favorite Asian dish".AsSystemMessage(),
+                };
+
+            for (int i = 0; i < 3; i++)
+            {
+                var res = await RunOllamaModelAsync(OllamaGemmaModelName, messages);
+
+                Console.WriteLine("AI: " + res);
+
+                messages = messages.Append(res.AsAiMessage()).ToArray();
+
+                var userInput = Console.ReadLine() ?? string.Empty;
+
+                messages = messages.Append(userInput.AsHumanMessage()).ToArray();
+            }
+
+            messages = messages.Append("And Now. Which plate do you think I will like. just type the plate name".AsHumanMessage()).ToArray();
+
+            var finalResponse = await RunOllamaModelAsync(OllamaGemmaModelName, messages);
+
+            Console.WriteLine("AI: " + finalResponse);
         }
 
         //public async Task Test1(string apiKey)

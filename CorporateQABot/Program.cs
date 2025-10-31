@@ -8,12 +8,14 @@ var config = builder.Build();
 //var apiKey = config["OpenAI:ApiKey"];
 //var apiKey = config["Gemini:ApiKey"];
 
-var class1 = new OllamaModelService();
+var ollamaService = new OllamaModelService();
 
-//await class1.RunOllamaModelAsync(Class1.OllamaQwenModelName, "List three benefits of using .NET for AI development:");
-//await class1.GenerateOllamaChatAsync(OllamaModelService.OllamaQwenModelName);
-//await class1.PromptTemplateFunc();
-await class1.ChatPromptTemplates();
+//await ollamaService.RunOllamaModelAsync(Class1.OllamaQwenModelName, "List three benefits of using .NET for AI development:");
+//await ollamaService.GenerateOllamaChatAsync(OllamaModelService.OllamaQwenModelName);
+//await ollamaService.PromptTemplateFunc();
+//await ollamaService.ChatPromptTemplates();
+//await ollamaService.ConversationPromptTemplates();
+await ollamaService.ContinuesConversationPromptTemplates();
 
 //Console.WriteLine("Hello, World!");
 
