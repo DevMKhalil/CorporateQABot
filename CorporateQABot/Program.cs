@@ -17,7 +17,8 @@ var ollamaService = new OllamaModelService();
 //await ollamaService.ConversationPromptTemplates();
 //await ollamaService.ContinuesConversationPromptTemplates();
 //await ollamaService.BasicFewShotLearningPrompt();
-await ollamaService.AdvancedFewShotLearningPrompt();
+//await ollamaService.AdvancedFewShotLearningPrompt();
+await ollamaService.AnotherAdvancedFewShotLearningPrompt();
 
 //Console.WriteLine("Hello, World!");
 

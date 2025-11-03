@@ -38,12 +38,14 @@ namespace CorporateQABot.Core
 
             foreach (var exampleSet in templateExamples)
             {
-                prompt.AppendLine(await baseTemplate.FormatAsync(new InputValues(exampleSet)));
+                var example = await baseTemplate.FormatAsync(new InputValues(exampleSet));
+                prompt.AppendLine(example);
             }
 
             var sufTemplate = PromptTemplate.FromTemplate(suffixTemplate);
 
-            prompt.AppendLine(await sufTemplate.FormatAsync(new InputValues(suffixInputVariable)));
+            var suffix = await sufTemplate.FormatAsync(new InputValues(suffixInputVariable));
+            prompt.AppendLine(suffix);
 
             return prompt.ToString();
         }

@@ -375,7 +375,6 @@ namespace CorporateQABot.Core
         /// </exception>
         public async Task AdvancedFewShotLearningPrompt()
         {
-
             var problemPrompt = "Total with what my family is 50 oranges. if we subtract one-fifth of the number from them, and add ten more oranges, how many oranges will there be in the end?";
 
             var examples = new List<Dictionary<string, object>>()
@@ -457,6 +456,8 @@ namespace CorporateQABot.Core
                 }
             };
 
+            var basePrompt = "follow and stick with the follwoing pattern\n";
+
             var prompt = await Helper.FewShotPrompt(
                 "\nProblem: {problem}\n-------------\nAnswer: {answer}",
                 "Problem: {problem} \n-------------\n",
@@ -466,11 +467,77 @@ namespace CorporateQABot.Core
 
             //Console.WriteLine(prompt);
 
-            var res = await RunOllamaModelAsync(OllamaGemmaModelName, prompt, 0);
+            var res = await RunOllamaModelAsync(OllamaGemmaModelName, basePrompt + prompt, 0);
 
             Console.WriteLine("AI: " + res);
         }
 
+        /// <summary>
+        /// Builds and sends an advanced few-shot prompt for generating
+        /// ingredients for a given recipe name, using the default Gemma model.
+        /// </summary>
+        /// <remarks>
+        /// Composes a prompt via <see cref="Helper.FewShotPrompt"/> with example
+        /// pairs of <c>recipe</c> and multiline <c>ingredients</c>. A leading
+        /// instruction asks the model to strictly follow the shown pattern.
+        /// The model is invoked with temperature set to 0 to encourage
+        /// deterministic output, and the response is written to the console.
+        /// </remarks>
+        /// <returns>A task that completes after the model response is written to the console.</returns>
+        /// <exception cref="System.Exception">Propagates any exception thrown by the underlying model invocation.</exception>
+        public async Task AnotherAdvancedFewShotLearningPrompt()
+        {
+            var recipePrompt = "mashed potato";
+
+            var examples = new List<Dictionary<string, object>>()
+            {
+                new Dictionary<string, object>
+                {
+                    ["recipe"] = "olives pizza.",
+                    ["ingredients"] = string.Join("\n", new List<string>
+                    {
+                        "* 1 pizza dough",
+                        "* 1 tablespoon olive oil",
+                        "* 8 ounces cream cheese",
+                        "* 1/2 cup mozzarella cheese shredded",
+                        "* 1 tablespoon fresh parsley",
+                        "* 1/3 cup sliced green olives",
+                        "* 1/3 cup sliced black olives"
+                    })
+                },
+                new Dictionary<string, object>
+                {
+                    ["recipe"] = "falafel.",
+                    ["ingredients"] = string.Join("\n",new List<string>
+                    {
+                        "* 1 cup dried chickpeas, soaked overnight",
+                        "* 1/2 cup onion",
+                        "* 1 cup parsley",
+                        "* 1 cup cilantro",
+                        "* 1 tablespoon fresh parsley",
+                        "* 1/3 cup sliced green olives",
+                        "* 1/3 cup sliced black olives",
+                        "* 3 garlic cloves",
+                        "* 1 tsp salt"
+                    })
+                },
+            };
+
+            var basePrompt = "follow and stick with the follwoing pattern\n";
+
+            var prompt = await Helper.FewShotPrompt(
+                "\nRecipe:\n{recipe}\n-------------\nIngredients:\n{ingredients}",
+                "\nRecipe:\n{recipe}\n-------------\n",
+                new Dictionary<string, object> { ["recipe"] = recipePrompt },
+                examples
+                );
+
+            //Console.WriteLine(prompt);
+
+            var res = await RunOllamaModelAsync(OllamaGemmaModelName, basePrompt + prompt, 0);
+
+            Console.WriteLine("AI: " + res);
+        }
 
         //public async Task Test1(string apiKey)
         //{
