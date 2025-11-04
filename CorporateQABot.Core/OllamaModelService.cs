@@ -1,4 +1,5 @@
-﻿using LangChain.Prompts;
+﻿using CorporateQABot.Core.OutputParsers;
+using LangChain.Prompts;
 using LangChain.Prompts.Base;
 using LangChain.Providers;
 using LangChain.Providers.Ollama;
@@ -535,6 +536,65 @@ namespace CorporateQABot.Core
             //Console.WriteLine(prompt);
 
             var res = await RunOllamaModelAsync(OllamaGemmaModelName, basePrompt + prompt, 0);
+
+            Console.WriteLine("AI: " + res);
+        }
+
+        /// <summary>
+        /// Demonstrates how to apply <see cref="CommaSeparatedListOutputParser"/> format instructions to a prompt
+        /// and parse the model response back into a strongly typed string collection.
+        /// </summary>
+        /// <returns>A task that completes after logging the raw and parsed model responses.</returns>
+        public async Task CommaSeparatedListOutputParserResult()
+        {
+            var outputParser = new CommaSeparatedListOutputParser();
+
+            var formatInstructions = outputParser.GetFormatInstructions();
+
+            var promptTemplate = new PromptTemplate(new PromptTemplateInput(
+                "List three popular {type} plates.\n{formatInstructions}",
+                 new List<string> { "type" },
+                 new Dictionary<string, object> { ["formatInstructions"] = formatInstructions }));
+
+            var values = new InputValues(new Dictionary<string, object>
+            {
+                ["type"] = "Asian"
+            });
+
+            var prompt = await promptTemplate.FormatAsync(values);
+
+            var res = await RunOllamaModelAsync(OllamaGemmaModelName, prompt, 0);
+
+            Console.WriteLine("AI: " + res);
+
+            var output = outputParser.Parse(res);
+
+            Console.WriteLine("AI: " + output);
+        }
+
+        /// <summary>
+        /// Requests a birth date using a custom output format and prints the model response without additional parsing.
+        /// </summary>
+        /// <returns>A task that completes after prompting the model and writing the response to the console.</returns>
+        public async Task CustomOutputParserResult()
+        {
+            var formatInstructions = "Replay with a datetime format DAY/MONTH/YEAR like `23/05/1988`.";
+
+            var input = new PromptTemplateInput(
+                "Provide the birth date of {person}.\n{formatInstructions}",
+                 new List<string> { "person" },
+                 new Dictionary<string, object> { ["formatInstructions"] = formatInstructions });
+
+            var promptTemplate = new PromptTemplate(input);
+
+            var values = new InputValues(new Dictionary<string, object>
+            {
+                ["person"] = "thomas edison"
+            });
+
+            var prompt = await promptTemplate.FormatAsync(values);
+
+            var res = await RunOllamaModelAsync(OllamaGemmaModelName, prompt, 0);
 
             Console.WriteLine("AI: " + res);
         }

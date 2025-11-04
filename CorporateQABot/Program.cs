@@ -18,7 +18,9 @@ var ollamaService = new OllamaModelService();
 //await ollamaService.ContinuesConversationPromptTemplates();
 //await ollamaService.BasicFewShotLearningPrompt();
 //await ollamaService.AdvancedFewShotLearningPrompt();
-await ollamaService.AnotherAdvancedFewShotLearningPrompt();
+//await ollamaService.AnotherAdvancedFewShotLearningPrompt();
+//await ollamaService.CommaSeparatedListOutputParserResult();
+await ollamaService.CustomOutputParserResult();
 
 //Console.WriteLine("Hello, World!");
 
