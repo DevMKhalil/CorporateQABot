@@ -20,7 +20,8 @@ var ollamaService = new OllamaModelService();
 //await ollamaService.AdvancedFewShotLearningPrompt();
 //await ollamaService.AnotherAdvancedFewShotLearningPrompt();
 //await ollamaService.CommaSeparatedListOutputParserResult();
-await ollamaService.CustomOutputParserResult();
+//await ollamaService.CustomOutputParserResult();
+await ollamaService.PydanticOutputParserResult();
 
 //Console.WriteLine("Hello, World!");
 

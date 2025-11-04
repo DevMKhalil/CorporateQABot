@@ -6,6 +6,7 @@ using LangChain.Providers.Ollama;
 using LangChain.Schema;
 using Newtonsoft.Json.Linq;
 using OpenAI.Chat;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using OllamaMsgExt = Ollama.StringExtensions;
 
@@ -599,6 +600,40 @@ namespace CorporateQABot.Core
             Console.WriteLine("AI: " + res);
         }
 
+        /// <summary>
+        /// Shows how to enforce a strongly typed response schema using <see cref="PydanticOutputParser{T}"/>
+        /// by feeding its format instructions into a prompt and parsing the model output into a <see cref="Plate"/>.
+        /// </summary>
+        /// <returns>A task that completes after printing both the raw response and the parsed plate name.</returns>
+        public async Task PydanticOutputParserResult()
+        {
+            var parser = new PydanticOutputParser<Plate>();
+
+            var formatInstructions = parser.GetFormatInstructions();
+
+            var input = new PromptTemplateInput(
+                "answer the query.\n{plateName}.\n{formatInstructions}",
+                 new List<string> { "plateName" },
+                 new Dictionary<string, object> { ["formatInstructions"] = formatInstructions });
+
+            var promptTemplate = new PromptTemplate(input);
+
+            var values = new InputValues(new Dictionary<string, object>
+            {
+                ["plateName"] = "Shawerma"
+            });
+
+            var prompt = await promptTemplate.FormatAsync(values);
+
+            var res = await RunOllamaModelAsync(OllamaGemmaModelName, prompt, 0);
+
+            Console.WriteLine("AI: " + res);
+
+            var output = await parser.Parse(res);
+
+            Console.WriteLine("AI: " + output.PlateName);
+        }
+
         //public async Task Test1(string apiKey)
         //{
         //    //string modelName = "gemini-2.5-pro";
@@ -669,5 +704,16 @@ namespace CorporateQABot.Core
         //        throw;
         //    }
         //}
+    }
+
+    public class Plate
+    {
+        [Required]
+        [Display(Name = "PlateName", Description = "name of the plate")]
+        public string PlateName { get; set; }
+
+        [Required]
+        [Display(Name = "IngredientList", Description = "list of names of the Ingredients")]
+        public List<string> IngredientList { get; set; }
     }
 }
