@@ -13,9 +13,7 @@ using OllamaMsgExt = Ollama.StringExtensions;
 using LangChain.Chains.LLM;
 using LangChain.Chains.Sequentials;
 using LangChain.Abstractions.Chains.Base;
-
-
-
+using static LangChain.Chains.Chain;
 
 namespace CorporateQABot.Core
 {
@@ -782,6 +780,26 @@ namespace CorporateQABot.Core
 
             Console.WriteLine($"Product Name: {result.Value["productName"]}");
             Console.WriteLine($"Slogan: {result.Value["text"]}");
+        }
+
+        public async Task DealingWithLCELBasicChain()
+        {
+            // LCEL (LangChain Core Execution Logic)
+            var prompt = @"
+You are an AI assistant that greets the world.
+World: Hello, Assistant!
+Assistant:";
+
+            var chain =
+                Set(prompt, outputKey: "prompt")
+                | LLM(OllamaGemmaModel, inputKey: "prompt");
+
+            var res = await chain.RunAsync();
+
+            foreach (var item in res.Value)
+            {
+                Console.WriteLine(item.Value);
+            }
         }
 
         //public async Task Test1(string apiKey)

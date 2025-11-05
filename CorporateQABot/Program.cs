@@ -25,7 +25,8 @@ var ollamaService = new OllamaModelService();
 //await ollamaService.DealingWithSequentialChain();
 //await ollamaService.DealingWithChainWithInputVariables();
 //await ollamaService.DealingWithChainWithOutInputVariables();
-await ollamaService.DealingWithChainAndChatPromptTemplate();
+//await ollamaService.DealingWithChainAndChatPromptTemplate();
+await ollamaService.DealingWithLCELBasicChain();
 
 //Console.WriteLine("Hello, World!");
 
