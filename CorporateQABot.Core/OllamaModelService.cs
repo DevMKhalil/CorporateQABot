@@ -4,11 +4,16 @@ using LangChain.Prompts.Base;
 using LangChain.Providers;
 using LangChain.Providers.Ollama;
 using LangChain.Schema;
+using LangChain.Chains;
 using Newtonsoft.Json.Linq;
 using OpenAI.Chat;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using OllamaMsgExt = Ollama.StringExtensions;
+using LangChain.Chains.LLM;
+using LangChain.Chains.Sequentials;
+using LangChain.Abstractions.Chains.Base;
+
 
 
 
@@ -32,6 +37,22 @@ namespace CorporateQABot.Core
         /// Default Qwen model identifier used by sample calls.
         /// </summary>
         public const string OllamaQwenModelName = "qwen3:1.7b-q4_K_M";
+
+        /// <summary>
+        /// Shared Gemma chat model instance configured for deterministic responses in sample chains.
+        /// </summary>
+        private OllamaChatModel OllamaGemmaModel = new OllamaChatModel(new OllamaProvider(), OllamaGemmaModelName)
+        {
+            Settings = new OllamaChatSettings()
+            {
+                Temperature = 0.0f
+            }
+        };
+
+        /// <summary>
+        /// Shared Qwen chat model instance used by examples that target Qwen-specific behavior.
+        /// </summary>
+        private OllamaChatModel OllamaQwenModel = new OllamaChatModel(new OllamaProvider(), OllamaQwenModelName);
 
         /// <summary>
         /// Sends a single message to the specified Ollama chat model and returns
@@ -632,6 +653,135 @@ namespace CorporateQABot.Core
             var output = await parser.Parse(res);
 
             Console.WriteLine("AI: " + output.PlateName);
+        }
+
+        /// <summary>
+        /// Demonstrates running an <see cref="LlmChain"/> that requires input variables by calling both
+        /// <see cref="LlmChain.CallAsync(ChainValues, System.Threading.CancellationToken)"/> and
+        /// <see cref="LlmChain.RunAsync(IDictionary{string, object}, System.Threading.CancellationToken)"/>.
+        /// </summary>
+        /// <returns>A task that completes after writing the chain outputs to the console.</returns>
+        public async Task DealingWithChainWithInputVariables()
+        {
+            var template = new PromptTemplate(new PromptTemplateInput(
+                 template: "Suggest a creative name for a company that makes {product}.",
+                 inputVariables: ["product"]));
+
+            var llmChain = new LlmChain(new LlmChainInput(OllamaGemmaModel, template))
+            {
+                Verbose = true,
+            };
+
+            // the first style to run the chain with input Variables
+            var result = await llmChain.CallAsync(new ChainValues(new Dictionary<string, object>
+            {
+                ["product"] = "colourful socks"
+            }));
+
+            Console.WriteLine(result.Value["text"]);
+
+            // the second style to run the chain with input Variables
+            var result2 = await llmChain.RunAsync(new Dictionary<string, object>
+            {
+                ["product"] = "smart watches"
+            });
+
+            Console.WriteLine(result2);
+        }
+
+        /// <summary>
+        /// Shows how to execute an <see cref="LlmChain"/> whose prompt has no external variables by passing an empty input.
+        /// </summary>
+        /// <returns>A task that completes after logging the generated company name.</returns>
+        public async Task DealingWithChainWithOutInputVariables()
+        {
+            var template = PromptTemplate.FromTemplate("Suggest a creative name for a company that makes wireless earbuds.");
+
+            var llmChain = new LlmChain(new LlmChainInput(OllamaGemmaModel, template))
+            {
+                Verbose = true,
+            };
+
+            var result = await llmChain.RunAsync(string.Empty);
+
+            Console.WriteLine(result);
+        }
+
+        /// <summary>
+        /// Illustrates building a chat-style prompt template, binding it to an <see cref="LlmChain"/>,
+        /// and invoking it with multiple input variables to translate text.
+        /// </summary>
+        /// <returns>A task that completes after printing the translated text.</returns>
+        public async Task DealingWithChainAndChatPromptTemplate()
+        {
+            var chatPrompt = ChatPromptTemplate.FromPromptMessages([
+                SystemMessagePromptTemplate.FromTemplate(
+                    "You are a helpful assistant that translates {input_language} to {output_language}."),
+                HumanMessagePromptTemplate.FromTemplate("{text}")
+            ]);
+
+            var chainB = new LlmChain(new LlmChainInput(OllamaGemmaModel, chatPrompt)
+            {
+                Verbose = true
+            });
+
+            var resultB = await chainB.CallAsync(new ChainValues(new Dictionary<string, object>(3)
+            {
+                {"input_language", "English"},
+                {"output_language", "French"},
+                {"text", "I love programming"},
+            }));
+
+            Console.WriteLine(resultB.Value["text"]);
+        }
+
+        /// <summary>
+        /// Demonstrates chaining multiple <see cref="LlmChain"/> instances in sequence so that the output of one
+        /// becomes the input of the next using <see cref="SequentialChain"/>.
+        /// </summary>
+        /// <returns>A task that completes after logging the generated product name and slogan.</returns>
+        public async Task DealingWithSequentialChain()
+        {
+            var nameTemplate = new PromptTemplate(new PromptTemplateInput(
+                template: "Generate a catchy product name for a {productType} that is eco-friendly.",
+                inputVariables: ["productType"]));
+
+            var nameChain = new LlmChain(new LlmChainInput(OllamaGemmaModel, nameTemplate))
+            {
+                Verbose = true,
+                OutputKey = "productName"
+            };
+
+            // Chain 2: Generate marketing slogan
+            var sloganTemplate = new PromptTemplate(new PromptTemplateInput(
+                 template: "Create a memorable marketing slogan for the product named '{productName}'.",
+                 inputVariables: ["productName"]
+            ));
+
+            var sloganChain = new LlmChain(new LlmChainInput(OllamaGemmaModel, sloganTemplate))
+            {
+                Verbose = true,
+            };
+
+            // Compose sequential chain
+            var sequentialChain = new SequentialChain(new SequentialChainInput(
+                new IChain[]
+                {
+                    nameChain,
+                    sloganChain
+                },
+                inputVariables: ["productType"],
+                outputVariables: ["productName", "text"]
+            ));
+
+            // Run the sequence with the initial input
+            var result = await sequentialChain.CallAsync(new ChainValues(new Dictionary<string, object>
+            {
+                ["productType"] = "reusable water bottle"
+            }));
+
+            Console.WriteLine($"Product Name: {result.Value["productName"]}");
+            Console.WriteLine($"Slogan: {result.Value["text"]}");
         }
 
         //public async Task Test1(string apiKey)

@@ -21,7 +21,11 @@ var ollamaService = new OllamaModelService();
 //await ollamaService.AnotherAdvancedFewShotLearningPrompt();
 //await ollamaService.CommaSeparatedListOutputParserResult();
 //await ollamaService.CustomOutputParserResult();
-await ollamaService.PydanticOutputParserResult();
+//await ollamaService.PydanticOutputParserResult();
+//await ollamaService.DealingWithSequentialChain();
+//await ollamaService.DealingWithChainWithInputVariables();
+//await ollamaService.DealingWithChainWithOutInputVariables();
+await ollamaService.DealingWithChainAndChatPromptTemplate();
 
 //Console.WriteLine("Hello, World!");
 
