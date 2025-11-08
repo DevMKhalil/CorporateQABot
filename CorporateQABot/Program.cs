@@ -9,6 +9,7 @@ var config = builder.Build();
 //var apiKey = config["Gemini:ApiKey"];
 
 var ollamaService = new OllamaModelService();
+var ollamaChains = new ChainsWithOllama();
 
 //await ollamaService.RunOllamaModelAsync(Class1.OllamaQwenModelName, "List three benefits of using .NET for AI development:");
 //await ollamaService.GenerateOllamaChatAsync(OllamaModelService.OllamaQwenModelName);
@@ -26,7 +27,11 @@ var ollamaService = new OllamaModelService();
 //await ollamaService.DealingWithChainWithInputVariables();
 //await ollamaService.DealingWithChainWithOutInputVariables();
 //await ollamaService.DealingWithChainAndChatPromptTemplate();
-await ollamaService.DealingWithLCELBasicChain();
+//await ollamaService.DealingWithLCELBasicChain();
+//await ollamaChains.CreateRunnableWith_ConversationBufferMemory_History();
+//await ollamaChains.CreateRunnableWith_ConversationBufferWindowMemory_History();
+//await ollamaChains.CreateRunnableWith_ConversationSummaryMemory_History();
+await ollamaChains.CreateRunnableWith_ConversationBufferMemory_History_WithSavingHistory();
 
 //Console.WriteLine("Hello, World!");
 

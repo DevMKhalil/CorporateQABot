@@ -49,5 +49,11 @@ namespace CorporateQABot.Core
 
             return prompt.ToString();
         }
+
+        public static string ProjectRoot =>
+            Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
+
+        public static string GetDataChatsFilePath(string relativePath) =>
+            Path.Combine(ProjectRoot, "Data", "Chats", relativePath);
     }
 }

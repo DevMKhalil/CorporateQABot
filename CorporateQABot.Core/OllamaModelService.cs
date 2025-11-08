@@ -26,31 +26,6 @@ namespace CorporateQABot.Core
     /// </summary>
     public class OllamaModelService
     {
-        /// <summary>
-        /// Default Gemma model identifier used by sample calls.
-        /// </summary>
-        public const string OllamaGemmaModelName = "gemma2:2b-instruct-q4_K_M";
-
-        /// <summary>
-        /// Default Qwen model identifier used by sample calls.
-        /// </summary>
-        public const string OllamaQwenModelName = "qwen3:1.7b-q4_K_M";
-
-        /// <summary>
-        /// Shared Gemma chat model instance configured for deterministic responses in sample chains.
-        /// </summary>
-        private OllamaChatModel OllamaGemmaModel = new OllamaChatModel(new OllamaProvider(), OllamaGemmaModelName)
-        {
-            Settings = new OllamaChatSettings()
-            {
-                Temperature = 0.0f
-            }
-        };
-
-        /// <summary>
-        /// Shared Qwen chat model instance used by examples that target Qwen-specific behavior.
-        /// </summary>
-        private OllamaChatModel OllamaQwenModel = new OllamaChatModel(new OllamaProvider(), OllamaQwenModelName);
 
         /// <summary>
         /// Sends a single message to the specified Ollama chat model and returns
@@ -170,7 +145,7 @@ namespace CorporateQABot.Core
 
             Console.WriteLine(oneFormatedPrompt);
 
-            await RunOllamaModelAsync(OllamaGemmaModelName, oneFormatedPrompt);
+            await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, oneFormatedPrompt);
 
             //*****************************************************************************//
             // another way using PromptTemplate class
@@ -188,7 +163,7 @@ namespace CorporateQABot.Core
 
             Console.WriteLine(formattedPrompt);
 
-            await RunOllamaModelAsync(OllamaGemmaModelName, oneFormatedPrompt);
+            await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, oneFormatedPrompt);
 
             //*****************************************************************************//
             // more complex way using PromptTemplateInput
@@ -229,7 +204,7 @@ namespace CorporateQABot.Core
 
             Console.WriteLine(formattedPrompt);
 
-            await RunOllamaModelAsync(OllamaGemmaModelName, formattedPrompt);
+            await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, formattedPrompt);
 
             //*****************************************************************************//
             // Dynamic Chat Prompt Template
@@ -258,7 +233,7 @@ namespace CorporateQABot.Core
 
             Console.WriteLine(chatMessage);
 
-            await RunOllamaModelAsync(OllamaGemmaModelName, chatMessage);
+            await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, chatMessage);
         }
 
         /// <summary>
@@ -284,7 +259,7 @@ namespace CorporateQABot.Core
                     "yes".AsHumanMessage()
                 };
 
-            await RunOllamaModelAsync(OllamaGemmaModelName, messages);
+            await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, messages);
         }
 
         /// <summary>
@@ -305,7 +280,7 @@ namespace CorporateQABot.Core
 
             for (int i = 0; i < 3; i++)
             {
-                var res = await RunOllamaModelAsync(OllamaGemmaModelName, messages);
+                var res = await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, messages);
 
                 Console.WriteLine("AI: " + res);
 
@@ -318,7 +293,7 @@ namespace CorporateQABot.Core
 
             messages = messages.Append("And Now. Which plate do you think I will like. just type the plate name".AsHumanMessage()).ToArray();
 
-            var finalResponse = await RunOllamaModelAsync(OllamaGemmaModelName, messages);
+            var finalResponse = await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, messages);
 
             Console.WriteLine("AI: " + finalResponse);
         }
@@ -370,7 +345,7 @@ namespace CorporateQABot.Core
 
             Console.WriteLine(prompt);
 
-            var res = await RunOllamaModelAsync(OllamaGemmaModelName, prompt);
+            var res = await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, prompt);
 
             Console.WriteLine("AI: " + res);
         }
@@ -488,7 +463,7 @@ namespace CorporateQABot.Core
 
             //Console.WriteLine(prompt);
 
-            var res = await RunOllamaModelAsync(OllamaGemmaModelName, basePrompt + prompt, 0);
+            var res = await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, basePrompt + prompt, 0);
 
             Console.WriteLine("AI: " + res);
         }
@@ -555,7 +530,7 @@ namespace CorporateQABot.Core
 
             //Console.WriteLine(prompt);
 
-            var res = await RunOllamaModelAsync(OllamaGemmaModelName, basePrompt + prompt, 0);
+            var res = await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, basePrompt + prompt, 0);
 
             Console.WriteLine("AI: " + res);
         }
@@ -583,7 +558,7 @@ namespace CorporateQABot.Core
 
             var prompt = await promptTemplate.FormatAsync(values);
 
-            var res = await RunOllamaModelAsync(OllamaGemmaModelName, prompt, 0);
+            var res = await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, prompt, 0);
 
             Console.WriteLine("AI: " + res);
 
@@ -614,7 +589,7 @@ namespace CorporateQABot.Core
 
             var prompt = await promptTemplate.FormatAsync(values);
 
-            var res = await RunOllamaModelAsync(OllamaGemmaModelName, prompt, 0);
+            var res = await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, prompt, 0);
 
             Console.WriteLine("AI: " + res);
         }
@@ -644,7 +619,7 @@ namespace CorporateQABot.Core
 
             var prompt = await promptTemplate.FormatAsync(values);
 
-            var res = await RunOllamaModelAsync(OllamaGemmaModelName, prompt, 0);
+            var res = await RunOllamaModelAsync(OllamaModelHelpers.OllamaGemmaModelName, prompt, 0);
 
             Console.WriteLine("AI: " + res);
 
@@ -665,7 +640,7 @@ namespace CorporateQABot.Core
                  template: "Suggest a creative name for a company that makes {product}.",
                  inputVariables: ["product"]));
 
-            var llmChain = new LlmChain(new LlmChainInput(OllamaGemmaModel, template))
+            var llmChain = new LlmChain(new LlmChainInput(OllamaModelHelpers.OllamaGemmaModel, template))
             {
                 Verbose = true,
             };
@@ -695,7 +670,7 @@ namespace CorporateQABot.Core
         {
             var template = PromptTemplate.FromTemplate("Suggest a creative name for a company that makes wireless earbuds.");
 
-            var llmChain = new LlmChain(new LlmChainInput(OllamaGemmaModel, template))
+            var llmChain = new LlmChain(new LlmChainInput(OllamaModelHelpers.OllamaGemmaModel, template))
             {
                 Verbose = true,
             };
@@ -718,7 +693,7 @@ namespace CorporateQABot.Core
                 HumanMessagePromptTemplate.FromTemplate("{text}")
             ]);
 
-            var chainB = new LlmChain(new LlmChainInput(OllamaGemmaModel, chatPrompt)
+            var chainB = new LlmChain(new LlmChainInput(OllamaModelHelpers.OllamaGemmaModel, chatPrompt)
             {
                 Verbose = true
             });
@@ -744,7 +719,7 @@ namespace CorporateQABot.Core
                 template: "Generate a catchy product name for a {productType} that is eco-friendly.",
                 inputVariables: ["productType"]));
 
-            var nameChain = new LlmChain(new LlmChainInput(OllamaGemmaModel, nameTemplate))
+            var nameChain = new LlmChain(new LlmChainInput(OllamaModelHelpers.OllamaGemmaModel, nameTemplate))
             {
                 Verbose = true,
                 OutputKey = "productName"
@@ -756,7 +731,7 @@ namespace CorporateQABot.Core
                  inputVariables: ["productName"]
             ));
 
-            var sloganChain = new LlmChain(new LlmChainInput(OllamaGemmaModel, sloganTemplate))
+            var sloganChain = new LlmChain(new LlmChainInput(OllamaModelHelpers.OllamaGemmaModel, sloganTemplate))
             {
                 Verbose = true,
             };
@@ -792,7 +767,7 @@ Assistant:";
 
             var chain =
                 Set(prompt, outputKey: "prompt")
-                | LLM(OllamaGemmaModel, inputKey: "prompt");
+                | LLM(OllamaModelHelpers.OllamaGemmaModel, inputKey: "prompt");
 
             var res = await chain.RunAsync();
 
