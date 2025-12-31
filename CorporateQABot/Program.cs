@@ -10,6 +10,7 @@ var config = builder.Build();
 
 var ollamaService = new OllamaModelService();
 var ollamaChains = new ChainsWithOllama();
+var agentsWithOllma = new AgentsWithOllma();
 
 //await ollamaService.RunOllamaModelAsync(Class1.OllamaQwenModelName, "List three benefits of using .NET for AI development:");
 //await ollamaService.GenerateOllamaChatAsync(OllamaModelService.OllamaQwenModelName);
@@ -31,7 +32,8 @@ var ollamaChains = new ChainsWithOllama();
 //await ollamaChains.CreateRunnableWith_ConversationBufferMemory_History();
 //await ollamaChains.CreateRunnableWith_ConversationBufferWindowMemory_History();
 //await ollamaChains.CreateRunnableWith_ConversationSummaryMemory_History();
-await ollamaChains.CreateRunnableWith_ConversationBufferMemory_History_WithSavingHistory();
+//await ollamaChains.CreateRunnableWith_ConversationBufferMemory_History_WithSavingHistory();
+await agentsWithOllma.Create_Agent_For_Generate_Keywords();
 
 //Console.WriteLine("Hello, World!");
 
