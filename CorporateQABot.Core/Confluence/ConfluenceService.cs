@@ -254,10 +254,10 @@ namespace CorporateQABot.Core.Confluence
                                         cleanExcerpt = Regex.Replace(cleanExcerpt, @"\s+", " ").Trim();
                                         
                                         // Limit length for readability
-                                        if (cleanExcerpt.Length > 150)
-                                        {
-                                            cleanExcerpt = cleanExcerpt.Substring(0, 150) + "...";
-                                        }
+                                        //if (cleanExcerpt.Length > 150)
+                                        //{
+                                        //    cleanExcerpt = cleanExcerpt.Substring(0, 150) + "...";
+                                        //}
                                         
                                         definitionHtml.Append($": {cleanExcerpt}");
                                     }
@@ -385,7 +385,6 @@ namespace CorporateQABot.Core.Confluence
                     foreach (var req in reqs)
                     {
                         var key = req["key"]?.ToString();
-                        var excerpt = req["htmlExcerpt"]?.ToString();
                         var origin = req["origin"]?["title"]?.ToString();
                         var destinationUrl = req["destinationUrl"]?.ToString();
                         var status = req["status"]?.ToString();
@@ -396,21 +395,27 @@ namespace CorporateQABot.Core.Confluence
                             var reqInfo = new RequirementInfo
                             {
                                 Key = key,
-                                Excerpt = excerpt ?? string.Empty,
                                 OriginTitle = origin ?? string.Empty,
                                 DestinationUrl = destinationUrl ?? string.Empty,
                                 Status = status ?? "ACTIVE",
                                 SpaceKey = reqSpaceKey ?? string.Empty
                             };
 
-                            // Extract properties (e.g., @ActorNameAr, @ActorNameEn, @Description)
+                            // Build a rich excerpt from indexation data
+                            var excerptBuilder = new StringBuilder();
+
+                            // Extract properties and build excerpt from indexation
                             var properties = req["properties"];
                             if (properties != null)
                             {
                                 foreach (var prop in properties)
                                 {
                                     var propKey = prop["key"]?.ToString();
+                                    var propDataType = prop["dataType"]?.ToString();
                                     var propValue = prop["value"]?.ToString();
+                                    var indexation = prop["indexation"];
+
+                                    // Store the property value in Properties dictionary
                                     if (!string.IsNullOrEmpty(propKey) && !string.IsNullOrEmpty(propValue))
                                     {
                                         // Clean HTML from property value
@@ -418,6 +423,54 @@ namespace CorporateQABot.Core.Confluence
                                         cleanValue = Regex.Replace(cleanValue, @"\s+", " ").Trim();
                                         reqInfo.Properties[propKey] = cleanValue;
                                     }
+
+                                    // Build excerpt from indexation data
+                                    if (indexation != null)
+                                    {
+                                        // Handle multivalues (like Description with list items)
+                                        var multivalues = indexation["multivalues"];
+                                        if (multivalues != null && multivalues.HasValues)
+                                        {
+                                            excerptBuilder.AppendLine($"{propKey}:");
+                                            foreach (var value in multivalues)
+                                            {
+                                                var valueText = value?.ToString()?.Trim();
+                                                if (!string.IsNullOrEmpty(valueText))
+                                                {
+                                                    excerptBuilder.AppendLine($"  • {valueText}");
+                                                }
+                                            }
+                                        }
+                                        
+                                        // Handle simple text (like ActorNameEn, ActorNameAr)
+                                        var textValue = indexation["text"]?.ToString()?.Trim();
+                                        if (!string.IsNullOrEmpty(textValue))
+                                        {
+                                            excerptBuilder.AppendLine($"{propKey}: {textValue}");
+                                        }
+                                    }
+                                }
+                            }
+
+                            // Set the excerpt from built data or fallback to htmlExcerpt
+                            var builtExcerpt = excerptBuilder.ToString().Trim();
+                            if (!string.IsNullOrEmpty(builtExcerpt))
+                            {
+                                reqInfo.Excerpt = builtExcerpt;
+                            }
+                            else
+                            {
+                                // Fallback to htmlExcerpt if no indexation data found
+                                var htmlExcerpt = req["htmlExcerpt"]?.ToString();
+                                if (!string.IsNullOrEmpty(htmlExcerpt))
+                                {
+                                    var cleanExcerpt = Regex.Replace(htmlExcerpt, "<[^>]+>", " ");
+                                    cleanExcerpt = Regex.Replace(cleanExcerpt, @"\s+", " ").Trim();
+                                    reqInfo.Excerpt = cleanExcerpt;
+                                }
+                                else
+                                {
+                                    reqInfo.Excerpt = string.Empty;
                                 }
                             }
 

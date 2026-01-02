@@ -1,0 +1,915 @@
+<h1>1. Use Case Properties</h1>
+<p><br></p>
+<table class=\"relative-table wrapped\" style=\"width: 1415.56px;\">
+    <colgroup>
+        <col style=\"width: 0.0px;\">
+        <col style=\"width: 0.0px;\">
+        <col style=\"width: 0.0px;\">
+        <col style=\"width: 0.0px;\">
+    </colgroup>
+    <tbody>
+        <tr>
+            <th colspan=\"1\">
+                <div class=\"content-wrapper\">
+                    <p>
+                        <ac:structured-macro ac:name=\"requirement-property\" ac:schema-version=\"1\" ac:macro-id=\"ca3e21e0-27b6-431a-b17a-937b9316bb69\">
+                            <ac:parameter ac:name=\"property\">Type</ac:parameter>
+                            <ac:parameter ac:name=\"value\">UseCase</ac:parameter>
+                        </ac:structured-macro>
+                    </p>
+                </div>
+            </th>
+            <th>
+                <div class=\"content-wrapper\">
+                    <p>Title</p>
+                </div>
+            </th>
+            <th>
+                <div class=\"content-wrapper\">
+                    <p>Related</p>
+                </div>
+            </th>
+            <th colspan=\"1\">Module</th>
+        </tr>
+        <tr>
+            <td colspan=\"1\">
+                <div class=\"content-wrapper\">
+                    <p>
+                        <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"c735770d-8acb-40b8-9255-b8d6cd1ddc2c\">
+                            <ac:parameter ac:name=\"type\">DEFINITION</ac:parameter>
+                            <ac:parameter ac:name=\"key\">UC-353</ac:parameter>
+                            <ac:parameter ac:name=\"\"></ac:parameter>
+                        </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (UC-Cancel Expert Support Request  ( إصدار قرار العدول عن  ندب الخبرة  ): Related: • Create • BJS-5488 Title: • إصدار قرار العدول عن ندب الخبرة • (Cancel Expert Support Request ) Type: UseCase)</span>
+                    </p>
+                </div>
+            </td>
+            <td>
+                <div class=\"content-wrapper\">
+                    <h1 class=\"with-breadcrumbs\">إصدار قرار العدول عن ندب الخبرة  </h1>
+                    <h1 class=\"with-breadcrumbs\">(Cancel Expert Support Request )</h1>
+                </div>
+            </td>
+            <td>
+                <div class=\"content-wrapper\">
+                    <p><br></p>
+                    <pre>Create </pre>
+                </div>
+                <p>
+                    <ac:structured-macro ac:name=\"jira\" ac:schema-version=\"1\" ac:macro-id=\"e01e4d55-537c-413d-b421-a26aa4b06354\">
+                        <ac:parameter ac:name=\"server\">Jira</ac:parameter>
+                        <ac:parameter ac:name=\"serverId\">078f5cb7-a93b-3298-82de-d699ab4c4d1d</ac:parameter>
+                        <ac:parameter ac:name=\"key\">BJS-5488</ac:parameter>
+                    </ac:structured-macro>
+                </p>
+            </td>
+            <td colspan=\"1\"><br></td>
+        </tr>
+    </tbody>
+</table>
+<p><br></p>
+<h1><span class=\"numhead-number\">2.<span> </span></span>Use Case Specifications</h1>
+<table class=\"wrapped relative-table\" style=\"width: 73.47%;\">
+    <colgroup>
+        <col style=\"width: 22.6584%;\">
+        <col style=\"width: 3.70647%;\">
+        <col style=\"width: 49.8625%;\">
+        <col style=\"width: 4.96527%;\">
+        <col style=\"width: 0.489533%;\">
+        <col style=\"width: 9.09133%;\">
+        <col style=\"width: 9.2312%;\">
+    </colgroup>
+    <tbody>
+        <tr>
+            <td style=\"text-align: left;\">
+                <p><strong>Description</strong></p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"6\">
+                <p>This use case should descript the process of creating Request  (العدول عن التصفية و رفع حجز )</p>
+            </td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <p><strong>Primary Actor</strong></p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"6\">
+                <div class=\"content-wrapper\" title=\"\">
+                    <p>
+                        <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"e8e2230d-fb30-4576-beb0-a44a98fd6290\">
+                            <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                            <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                            <ac:parameter ac:name=\"key\">ACT-008</ac:parameter>
+                            <ac:parameter ac:name=\"\"></ac:parameter>
+                        </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Actor Catalogue: ActorNameAr: قاضي ActorNameEn: Judge Description: • إصدار الأوامر، القرارات، الاحكام • استعراض الطلبات • ارفاق المرفقات للطلبات • الاطلاع على المرفقات...)</span> ,  <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"ac1ac05d-15d1-45c0-b265-b19d30d66d0d\">
+                            <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                            <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                            <ac:parameter ac:name=\"key\">ACT-006</ac:parameter>
+                            <ac:parameter ac:name=\"\"></ac:parameter>
+                        </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Actor Catalogue: ActorNameAr: • امين سر الدائرة ActorNameEn: judicial circuit Secretary Description: • استعراض الطلبات • ارفاق المرفقات على الطلبات • إعادة الطلبات لقس...)</span> 
+                    </p>
+                    <p>Hint : Judicial Circuit Secretary Can View Only result Without taking any Action </p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <p><strong>Triggering Event</strong></p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"6\">
+                <p><br></p>
+                <p>-</p>
+            </td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <p><strong>Pre-Condition(s)</strong></p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"6\">
+                <div class=\"content-wrapper\">
+                    <ul>
+                        <li data-uuid=\"5c9964a7-cb4b-41a3-9c37-0357695a3edf\">There is previous  Expert Support Request Decsion   <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"c3171d43-216d-4254-b863-1afe3795de76\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">UC-354</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (UC-Expert Support Request (قرار ندب الخبرة ): Related: • ⁠⁠Create • BJS-5337 Title: • قرار ندب الخبرة • (Expert Support Request) Type: UseCase)</span>
+                        </li>
+                        <li data-uuid=\"3c5ea4c9-688c-4d1a-a420-f9d15864c767\">Status Is not  in ( </li>
+                        <li data-uuid=\"fa9627ce-2455-4bcd-a445-767ca990452e\"><br>
+                            <ul>
+                                <li style=\"list-style-type: none;\">
+                                    <ul>
+                                        <li data-uuid=\"ea2cb83a-92fa-4fcc-a3ca-59ced97aaaad\">
+                                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"c3fdf868-fdc6-4c68-81f2-35c50a9d7e3b\">
+                                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                                <ac:parameter ac:name=\"key\">CASE-EXP-STS-011</ac:parameter>
+                                                <ac:parameter ac:name=\"\"></ac:parameter>
+                                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: التقرير تحت مراجعة القاضي)</span>
+                                        </li>
+                                        <li data-uuid=\"23121fdc-f44f-4b08-9d20-f4b22eca819b\"> <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"3536b77c-de72-4bac-8ca2-ac1554af87a0\">
+                                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                                <ac:parameter ac:name=\"key\">CASE-EXP-STS-014</ac:parameter>
+                                                <ac:parameter ac:name=\"\"></ac:parameter>
+                                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: تم رفض التقرير من أحد أطراف الدعوى وإعادته للخبير)</span>
+                                        </li>
+                                        <li data-uuid=\"ce0ddc9e-b505-4b60-83c4-874898248e75\">
+                                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"76ff21f0-e116-41b2-b941-29b634d27a64\">
+                                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                                <ac:parameter ac:name=\"key\">CASE-EXP-STS-013</ac:parameter>
+                                                <ac:parameter ac:name=\"\"></ac:parameter>
+                                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: تم اعتماد التقرير تلقائيًا من النظام)</span>
+                                        </li>
+                                        <li data-uuid=\"8a8ff506-aa0f-48c4-8d5f-dffddb18814a\">
+                                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"b4d64202-1038-47b8-9603-4317240a1bd2\">
+                                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                                <ac:parameter ac:name=\"key\">CASE-EXP-STS-015</ac:parameter>
+                                                <ac:parameter ac:name=\"\"></ac:parameter>
+                                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: تم رفع التقرير)</span>
+                                        </li>
+                                        <li data-uuid=\"2eea9a53-5eaf-4ba7-a872-bdd8265dc9b9\">
+                                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"f81ca8d6-993d-4e8e-b392-0069eda6b04d\">
+                                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                                <ac:parameter ac:name=\"key\">CASE-EXP-STS-017</ac:parameter>
+                                                <ac:parameter ac:name=\"\"></ac:parameter>
+                                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: تم إلغاء الطلب)</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>)</p>
+                    <p>This service will allow judge to cancel an expert request which is not yet in Report <br>review state (or final report or completed) </p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <p><strong>Post-Condition(s)</strong></p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"6\">Property Liquidation Withdrawal Request is Created Successfully </td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" rowspan=\"11\">
+                <p><strong> </strong></p>
+                <p><strong>Basic Flow</strong></p>
+            </td>
+            <td style=\"text-align: left;\">
+                <p><strong>#</strong></p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <p><strong>Step</strong></p>
+            </td>
+            <td style=\"text-align: left;\"><strong style=\"text-align: left;\">Other Flows</strong></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">1</div>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">
+                    <p>
+                        <ac:inline-comment-marker ac:ref=\"d3f92ab4-72ed-4166-897d-5fa4c5059ea4\">User click on Button  (العدول عن ندب الخبرة ) From Process Flow screen   </ac:inline-comment-marker>
+                    </p>
+                    <p><strong>
+                            <ac:inline-comment-marker ac:ref=\"d3f92ab4-72ed-4166-897d-5fa4c5059ea4\">Or </ac:inline-comment-marker>
+                        </strong></p>
+                    <p>كإجراء قضائى جديد من داخل طلبات التنفيذ </p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\">A1,E10 </td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">2</div>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">
+                    <p>
+                        <ac:inline-comment-marker ac:ref=\"d3f92ab4-72ed-4166-897d-5fa4c5059ea4\"><span style=\"color:var(--ds-text,#172b4d);\">System include :: </span><a style=\"text-align: left;\" href=\"https://wiki.elm.sa/display/BJS/UC+-+Check+user+can+access+the+resource\">UC - Check user can access the resource</a></ac:inline-comment-marker>
+                    </p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">3</div>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">
+                    <p>System to Show Page <span style=\"color:var(--ds-text-accent-teal,#206a83);\"> </span>as Per data Wireframe <span style=\"color:var(--ds-text-accent-teal,#206a83);\">Create Cancel Expert Request Decsion</span></p>
+                    <p><span style=\"color:var(--ds-text,#172b4d);\">System to Show Set below Field value  </span></p>
+                    <ul>
+                        <li data-uuid=\"f7aa1117-fa86-4a5b-a291-722384fae3bc\"><span><span style=\"color:var(--ds-text,#172b4d);\" title=\"\"><span style=\"color:var(--ds-text,#172b4d);\">execution request  </span>رقم طلب التنفيذ</span></span></li>
+                        <li data-uuid=\"6c3dc64f-0b0b-46bf-a597-4ea520389070\"><span><span style=\"color:var(--ds-text,#172b4d);\">expert Request IDرقم طلب ندب الخبرة</span></span></li>
+                    </ul>
+                </div>
+            </td>
+            <td style=\"text-align: left;\">E10 , E9, E7</td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">4</div>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">
+                    <p><br></p>
+                    <p>If Opend From الاجراءات القضائيه لطلب التنفيذ </p>
+                    <ul style=\"list-style-type: square;\">
+                        <li data-uuid=\"55f6c65e-69af-4ec0-978d-2e1182787829\">User To select رقم طلب ندب الخبرة </li>
+                    </ul>
+                    <p>Else If Open From Process Flow screen</p>
+                    <ul>
+                        <li data-uuid=\"9e365137-607b-4436-906f-f75a8015636b\">System to Populate Value=  Current Expert Request  &amp; Dimmed Field </li>
+                    </ul>
+                    <p><br></p>
+                    <p><span style=\"color:var(--ds-text,#172b4d);\">System to Show </span></p>
+                    <ul>
+                        <li data-uuid=\"8c7d982e-1ffa-482d-8108-c08be16b6228\"><span style=\"color:var(--ds-text,#172b4d);\">expert Request Status حاله طلب ندب الخبرة </span></li>
+                    </ul>
+                </div>
+            </td>
+            <td style=\"text-align: left;\">E10 , E9</td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">5</div>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text,#172b4d);\"><span style=\"color:var(--ds-text,#172b4d);\">System  </span>generate the Decsion text and allow judge to edit<span>
+                                <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"a8a5b2b7-1057-464a-b78e-b4550a474dc5\">
+                                    <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                    <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                    <ac:parameter ac:name=\"key\">JDF-049</ac:parameter>
+                                    <ac:parameter ac:name=\"\"></ac:parameter>
+                                </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (نصوص النماذج: Name: "قرار العدول عن ندب الخبرة")</span>
+                            </span></span> </p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">6 </div>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">
+                    <p>User to Termination Reason , If Other is Selected &quot;Free Text Area &quot; will be Enable So uer Can Add his Reason </p>
+                    <p>Hint : Show Only Active reason<span style=\"color:var(--ds-text-accent-red,#ae2e24);\"> ( Reason to be revisted By BA and May be updated) </span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\">
+                <p>E6,E4</p>
+            </td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">9</div>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">
+                    <p style=\"margin-top: 10.0px;\"><br></p>
+                    <p style=\"text-align: left;\">User to edit Decsion Text and Press  &quot;اصدار القرار &quot;  , System to show Confirmation Message<span>
+                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"d87c6451-1ff6-408a-8b3e-94bbb469af36\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">MSG-665</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Category: Confirmation Channel: Portal Message Text (AR): هل أنت متأكد من اصدار قرار العدول عن طلب ندب خبير (رقم الطلب) والموجه إلى( اسم جهة تنفيذ الط...)</span>
+                        </span></p>
+                    <p style=\"text-align: left;\">If User Confirm   ,<span> </span><span>System to perform Below </span></p>
+                    <ul style=\"text-align: left;\">
+                        <li data-uuid=\"dbd292d8-91c1-4596-b61a-5f0f33ff5c8f\">Show messge<span> </span>
+                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"3a78ccc3-e266-4176-b591-72a3efc5afe5\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">MSG-358</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Category: Info Channel: Portal Message Text (AR): تم إصدار ( إمر يقاف التنفيذ/قرار يقاف التنفيذ/قرار اثبات ترك طلب التنفيذ/ قرار إتمام التنفيذ/حكم إثب...)</span> 
+                        </li>
+                        <li data-uuid=\"21020646-c2de-4ca3-929b-e3710c42db2e\"><span style=\"color:var(--ds-text,#172b4d);\">update<span> <u>Cancel </u></span><u>Expert Request Status</u><span> حالة طلب العدول عن  ندب الخبرة </span><span> </span></span><span>
+                                <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"1486f0e5-1405-4d37-b209-fb76c5220386\">
+                                    <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                    <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                    <ac:parameter ac:name=\"key\">CANCEL-CASE-EXP-STS-001</ac:parameter>
+                                    <ac:parameter ac:name=\"\"></ac:parameter>
+                                </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: • تحت أجراء إنشاء طلب العدول عن ندب الخبير • عند ارسال طلب العدول عن ندب الخبرة الى الى منصة خبرة • Judge • EXP-ACT-002)</span>
+                            </span></li>
+                        <li data-uuid=\"0ebab5c9-1ff4-46a5-9ce9-a400297494b0\"><span style=\"color:var(--ds-text,#172b4d);\">System to Save<span> </span><u>Expert request Type<span> </span></u>=<span>
+                                    <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"4e5882b6-f7d2-40e9-aed5-a6ccb0efd50b\">
+                                        <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                        <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                        <ac:parameter ac:name=\"key\">EXP-ACT-002</ac:parameter>
+                                        <ac:parameter ac:name=\"\"></ac:parameter>
+                                    </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Support  Action Type: Property: • Cancel Expert Support Request • العدول عن ندب الخبرة)</span>
+                                </span></span></li>
+                    </ul>
+                </div>
+            </td>
+            <td style=\"text-align: left;\">
+                <p>E4, E5 ,E6,E7,E8,E9,E10</p>
+            </td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">10</div>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">
+                    <p style=\"text-align: left;\">System to call &quot;<strong>Cancel Expert Request</strong> &quot; As Per<span> </span><a href=\"https://wiki.elm.sa/spaces/BJS/pages/227986221/ESR+Integration+Guide\" rel=\"nofollow\">Integartion Guid<span> </span></a>and Send Fields as Mention in Paramter Mapping  </p>
+                    <p style=\"text-align: left;\">If Sucess , System to Update </p>
+                    <ol style=\"text-align: left;\">
+                        <li data-uuid=\"3da28f82-c07f-491b-91c6-7d55a5473992\"><span style=\"color:var(--ds-text,#172b4d);\">update<span> <span style=\"color:var(--ds-text,#172b4d);\"><u>Cancel </u><u>Expert Request Status</u> </span></span><span> </span>حالة طلب العدول عن  ندب الخبرة  <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"3d4537ca-ddf4-4e82-a657-3845bfb20a34\">
+                                    <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                    <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                    <ac:parameter ac:name=\"key\">CANCEL-CASE-EXP-STS-002</ac:parameter>
+                                    <ac:parameter ac:name=\"\"></ac:parameter>
+                                </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: • تم إنشاء طلب العدول عن ندب الخبير • ٍSystem • EXP-ACT-002)</span></span></li>
+                        <li data-uuid=\"3da28f82-c07f-491b-91c6-7d55a5473992\"><span style=\"color:var(--ds-text,#172b4d);\"><span style=\"color:var(--ds-text,#172b4d);\">update<span><span style=\"color:var(--ds-text,#172b4d);\"><u>Expert Request Status</u> </span></span><span> </span>حالة'طلب ندب الخبرة </span>
+                                <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"b1f79303-a0b3-4816-8683-c2c069f5990d\">
+                                    <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                    <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                    <ac:parameter ac:name=\"key\">CASE-EXP-STS-017</ac:parameter>
+                                    <ac:parameter ac:name=\"\"></ac:parameter>
+                                </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: تم إلغاء الطلب)</span> 
+                            </span></li>
+                    </ol>
+                    <p style=\"text-align: left;\"><span style=\"color:var(--ds-text,#172b4d);\">If failed</span></p>
+                    <ol style=\"text-align: left;\">
+                        <li data-uuid=\"8c385f51-c4c8-42d7-b7c5-17af33b1c4dc\">Updated<span> <span style=\"color:var(--ds-text,#172b4d);\"><u>Cancel </u><u>Expert Request Status</u> </span></span><span style=\"color:var(--ds-text,#172b4d);\"><span>حالة طلب العدول عن  ندب الخبرة </span><span> <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"40a9b937-796e-415e-ad9a-dc9337d6e5ed\">
+                                        <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                        <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                        <ac:parameter ac:name=\"key\">CANCEL-CASE-EXP-STS-003</ac:parameter>
+                                        <ac:parameter ac:name=\"\"></ac:parameter>
+                                    </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: • فشل إنشاء طلب العدول عن ندب الخبير • System • EXP-ACT-002)</span></span></span><span style=\"color:var(--ds-text,#172b4d);\"> </span></li>
+                    </ol>
+                </div>
+            </td>
+            <td style=\"text-align: left;\">
+                <p>E1,E2,E3</p>
+            </td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">13</div>
+                <div class=\"content-wrapper\" title=\"\"><br></div>
+            </td>
+            <td colspan=\"4\">
+                <div class=\"content-wrapper\" title=\"\">
+                    <p><br></p>
+                    <p style=\"text-align: left;\">System to send Nabaa SMS to selected Defendant <span>
+                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"574ee2fc-ce55-440c-afe1-8961e63a115a\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">MSG-159</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Channel: SMSE-mail Message Text (AR): تم صدور (أمر####/قرار####) برقم (####) في الطلب رقم (رقم طلب الارشاد/وقف المهل/تمديد وقف المهل/ إتمامالتنفيذ/فرض...)</span>
+                        </span></p>
+                    <p style=\"text-align: left;\"><span style=\"color:var(--ds-text-accent-blue,#0055cc);\">Make Sure Notification is Send To All Stack Holder including Representative IE أيضا التأكيد على أن التبليغ يكون لجميع أطراف طلب التنفيذ شاملا (طالب التنفيذ والمنفذ ضده الذي صدر اتجاه قرار ندب الخبرة)</span></p>
+                    <p style=\"text-align: left;\"><span style=\"color:var(--ds-text-accent-blue,#0055cc);\"> وأيضا جميع الممثلين و الوكلاء و جميع المفوضين في حال وجد للطرفين<span> </span></span><span> </span><span> </span><span style=\"color:var(--ds-text-accent-blue,#0055cc);\"><span> </span>)</span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <div class=\"content-wrapper\">15</div>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">End</div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" rowspan=\"3\">
+                <p><strong>Alternative Flows</strong></p>
+                <p><strong> </strong></p><br>
+                <p><br></p>
+                <p><strong> </strong></p>
+            </td>
+            <td style=\"text-align: left;\">
+                <p><strong>A1</strong></p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <p><strong><span style=\"color:var(--ds-text,#172b4d);\"><strong style=\"text-align: left;\">user Press Back </strong></span></strong></p>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <p>1</p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <div class=\"content-wrapper\">
+                    <p style=\"text-align: left;\"><span style=\"color:var(--ds-text,#172b4d);\"> </span><strong style=\"text-align: left;\">User can logout at anytime</strong></p>
+                    <ul style=\"text-align: left;\">
+                        <li data-uuid=\"48550cf5-de83-458d-abc8-64c84113222c\">User clicks on &quot;عودة&quot; to get back to the main request page list<span> </span><span> </span>
+                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"37c5c798-8687-45c2-875a-d9fbaf3c4f39\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">MSG-058</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Message Text (AR): هل أنت متأكد من رغبتك بالخروج من صفحة اصدار القرار؟)</span><span> </span><span> </span><span> </span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <p>2</p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"4\">
+                <p>End</p>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" rowspan=\"24\">
+                <p><strong>Exceptions</strong></p><br>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p><br>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p><br>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+                <p><strong> </strong></p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\" style=\"margin-top: 10.0px;\">
+                    <p style=\"margin-top: 10.0px;\"><strong>E1 : Technical error While Communicating with ESR</strong></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\" style=\"margin-top: 10.0px;\">
+                    <p><span style=\"color:var(--ds-text,#333333);\">System failed to sent the request to <span style=\"color:var(--ds-text,#172b4d);\">ERS<span> </span></span> or system received &quot;failed response&quot; From <span style=\"color:var(--ds-text,#172b4d);\">ERS<span> .</span></span></span></p>
+                </div>
+                <p>System will display  the following MSG &gt; <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"645b2bb7-f063-4958-8a46-9d274a7b6f89\">
+                        <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                        <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                        <ac:parameter ac:name=\"key\">MSG-116</ac:parameter>
+                        <ac:parameter ac:name=\"\"></ac:parameter>
+                    </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Category: error Channel: Portal Message Text (AR): لأسباب تقنية فشل إرسال طلب (#اسم الامر/القرار))</span>
+                </p>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <p><strong>E2 : Could not connect to the API</strong></p>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text,#172b4d);\">System will retry for 10 times &quot;3 times immediately and 7 times exponential polling&quot; incase <span> </span></span>System could not connect to the API</p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\" style=\"margin-top: 10.0px;\">
+                    <p style=\"margin-top: 10.0px;\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"><strong>E3: Error Returned from Service </strong></span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\" style=\"margin-top: 10.0px;\">
+                    <p style=\"text-align: left;\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">System will raise exception input error  Same As Mention in <span style=\"color:var(--ds-text,#333333);\">ERS  </span>Block <span> <strong>errorList </strong></span> in the following cases :</span></p>
+                    <p style=\"text-align: left;\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">An error returned in <strong>errorList </strong>Parameter </span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"> <strong>E4:   Must Add Reason text </strong></span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"> <span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">System will raise exception input error<span>
+                                    <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"eae194ff-61c7-47d2-a484-0f4fce30df4d\">
+                                        <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                        <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                        <ac:parameter ac:name=\"key\">MSG-660</ac:parameter>
+                                        <ac:parameter ac:name=\"\"></ac:parameter>
+                                    </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Category: Error Channel: Portal Message Text (AR): يرجى إدخال تفاصيل "أسباب أخرى" عند اختيار سبب العدول (أخرى).)</span>
+                                </span></span></span></p>
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">In  case User Select &quot;other &quot; from reason and Didnt Fill Reason text </span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"><strong style=\"text-align: left;\">E5 : Missing input<span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"> </span>data  </strong></span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">System will raise exception input error<span> </span>
+                                <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"182b9ed4-f1c1-47e0-bb34-027ded434d50\">
+                                    <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                    <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                    <ac:parameter ac:name=\"key\">MSG-006</ac:parameter>
+                                    <ac:parameter ac:name=\"\"></ac:parameter>
+                                </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (UC-View Stop Deadline Extend Requests By Dispatch User: Category: Error Message Text (AR): الحقل مطلوب Message Text (EN): Mandatory field)</span>
+                            </span></span></p>
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"><span> </span>if Missing mandatory Field </span></span></p>
+                    <ul>
+                        <li data-uuid=\"0ecb2aca-056b-40a5-adde-55790abc494b\">نص قرارالعدول عن  ندب الخبرة </li>
+                        <li data-uuid=\"1cff617f-92aa-4754-9420-b62e599afff7\">سبب العدول </li>
+                    </ul>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"><strong>E6 :  <strong style=\"text-align: left;\"><span> </span>Invalid Length of  Reason text </strong></strong></span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"> <span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">System will raise exception input error<span>
+                                    <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"8a7f6f2d-66d1-4071-8f79-b85187f0def8\">
+                                        <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                        <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                        <ac:parameter ac:name=\"key\">MSG-664</ac:parameter>
+                                        <ac:parameter ac:name=\"\"></ac:parameter>
+                                    </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Category: Error Channel: As an administrator , I want to view user Information Message Text (AR): لقد تجاوزت الحد الأقصى المسموح به للحروف في هذا الحق...)</span> 
+                                </span></span></span></p>
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">If Length Field &quot;Other Reason&quot; &gt; 500 </span></span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"><strong>E7 :<strong style=\"text-align: left;\"><span><span style=\"color:var(--ds-text,#172b4d);\">Status of the execution order not allow to issue Cancel Expert Support Decsion </span></span></strong></strong></span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p style=\"text-align: left;\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">System will raise exception input error<span> </span><span> </span>
+                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"162cffb5-d847-440e-bf5b-960efb267f81\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">MSG-146</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (UC-List Support Requests By (Defendant / plaintiff )/ Delegates: Category: Error Channel: Portal Message Text (AR): لا يمكن تقديم طلب(الإرشاد/ وقف المهل/ تمديد وقف المهل/ إتمام التنفيذ/فرض الغرامة/ إيقاف التنفيذ/الا...)</span><span> </span><span> </span>in the following cases :
+                        </span></p>
+                    <ul style=\"text-align: left;\">
+                        <li data-uuid=\"dbde7c02-8501-42ce-8cec-75caa3bad5d4\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">in case execution order status in  (م<span style=\"color:var(--ds-text,#172b4d);\">سودة محذوفة-معاد لاستكمال النواقص -م</span>حفوظ -تم التنفيذ- مغلق -<span> </span><span style=\"color:var(--ds-text,#172b4d);\"> </span>مقيد بانتظار الإحالة<span style=\"color:var(--ds-text,#172b4d);\"> </span>-  م<span style=\"color:var(--ds-text,#172b4d);\">سودة</span>)</span></li>
+                    </ul>
+                    <p><br></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\"><strong><strong style=\"text-align: left;\"><span><span style=\"color:var(--ds-text,#172b4d);\">E8: Expert Support  not allow to issue Cancel Expert Support Decsion </span></span></strong></strong></span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <p style=\"text-align: left;\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">System will raise exception input error<span> </span><span>
+                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"83f8f101-2efa-4bdf-92e4-0a05e8463c82\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">MSG-661</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Category: Error Channel: Portal Message Text (AR): لا يمكن تقديم طلب عدول عن طلب ندب الخبرة، لأن حالة طلب الندب الحالية لا تسمح بذلك)</span>
+                        </span><span> </span><span> </span>in the following cases :</span></p>
+                <p style=\"text-align: left;\"><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">This service will allow judge to cancel an expert request which is not yet in Report <br>review state (or final report or completed) </span></p>
+                <div class=\"content-wrapper\">
+                    <p><br></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\"><strong style=\"text-align: left;\"><span style=\"color:var(--ds-text,#172b4d);\">E9: in Progress Cancel request For Same Expert Support request </span></strong></td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">System will raise exception input error<span> </span><span>
+                                <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"f419decc-632f-4b4c-863b-91601ef24c3a\">
+                                    <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                    <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                    <ac:parameter ac:name=\"key\">MSG-662</ac:parameter>
+                                    <ac:parameter ac:name=\"\"></ac:parameter>
+                                </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Category: Error Channel: Portal Message Text (AR): لا يمكن تقديم طلب عدول عن ندب الخبرة لوجود طلب سابق تحت الإجراء لدى المنصة.)</span>
+                            </span><span> </span><span> </span>in the following cases :</span></p>
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">Cancekl expert request Status &quot; For Same Expert request &quot; = <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"47efa135-9706-4958-b531-846aac12187f\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">CANCEL-CASE-EXP-STS-001</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: • تحت أجراء إنشاء طلب العدول عن ندب الخبير • عند ارسال طلب العدول عن ندب الخبرة الى الى منصة خبرة • Judge • EXP-ACT-002)</span> </span></p>
+                    <p><br></p>
+                    <p><br></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\"><strong style=\"text-align: left;\"><span style=\"color:var(--ds-text,#172b4d);\">E10 : Cancel request For Same Expert Support request  Already Done  </span></strong></td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">System will raise exception input error<span> </span><span>
+                                <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"16ef007c-ff8e-433a-a3a0-db890e237a67\">
+                                    <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                    <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                    <ac:parameter ac:name=\"key\">MSG-663</ac:parameter>
+                                    <ac:parameter ac:name=\"\"></ac:parameter>
+                                </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (System Messages: Category: Error Channel: Portal Message Text (AR): لا يمكن تقديم طلب العدول، لأن العدول تم مسبقًا.)</span>
+                            </span><span> </span><span> </span>in the following cases :</span></p>
+                    <p><span style=\"color:var(--ds-text-accent-blue-bolder,#09326c);\">Cancekl expert request Status &quot; For Same Expert request &quot; = <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"8fdaec1f-b7db-4bfd-9315-8a85647f51a1\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">CANCEL-CASE-EXP-STS-002</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Expert Request Status حالات طلب ندب الخبرة: Property: • تم إنشاء طلب العدول عن ندب الخبير • ٍSystem • EXP-ACT-002)</span></span></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><br></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\"><br></td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\"><br></td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\" colspan=\"5\"><br></td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\">
+                <p><strong>Business / System Rules</strong></p>
+            </td>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p>
+                        <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"b690d013-c613-47f4-966f-4ab27838e979\">
+                            <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                            <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                            <ac:parameter ac:name=\"key\">BR-404</ac:parameter>
+                            <ac:parameter ac:name=\"\"></ac:parameter>
+                        </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Business Rules: Business Rule: إذا كانت قيمة "سبب العدول" هي (أخرى)، يصبح حقل "أسباب أخرى" إجباري Property: 400)</span>
+                        <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"23c387ac-2dc9-4105-a076-c4581798d2af\">
+                            <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                            <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                            <ac:parameter ac:name=\"key\">BR-405</ac:parameter>
+                            <ac:parameter ac:name=\"\"></ac:parameter>
+                        </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Business Rules: Business Rule: يتم عرض نص قرار العدول عن ندب الخبير لدى طالب التنفيذ والقاضي في قائمة الإجراءات القضائية داخل تفاصيل طلب التنفيذ، ويتم عرضها للمنفذ ضد...)</span>
+                        <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"8cb6deac-5245-472d-bf97-bc0fbc71685f\">
+                            <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                            <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                            <ac:parameter ac:name=\"key\">BR-406</ac:parameter>
+                            <ac:parameter ac:name=\"\"></ac:parameter>
+                        </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Business Rules: Business Rule: الحد الأقصى لطول النص في حقل "أسباب أخرى" هو 500 حرف، Property: 402)</span>
+                        <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"2c40ab18-f78b-429e-ab92-d17092a25a08\">
+                            <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                            <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                            <ac:parameter ac:name=\"key\">BR-407</ac:parameter>
+                            <ac:parameter ac:name=\"\"></ac:parameter>
+                        </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Business Rules: Business Rule: لا يمكن إصدار قرار العدول إذا كانت حالة طلب ندب الخبرة في حالة مراجعة التقرير أو بعد إصدار التقرير النهائي أو تم إغلاقه أو تم دفع الأتع...)</span>
+                        <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"13619cbc-c436-4768-bcdb-c9a6f92627ec\">
+                            <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                            <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                            <ac:parameter ac:name=\"key\">BR-408</ac:parameter>
+                            <ac:parameter ac:name=\"\"></ac:parameter>
+                        </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (Business Rules: Business Rule: عند إصدار قرار العدول عن ندب الخبير، يتم إشعار طالب التنفيذ والمنفذ ضده Property: 404)</span> 
+                    </p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\"><strong>Related Business Use Case (BRS/BC)</strong></td>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><br></p>
+                    <p><br></p>
+                </div>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr>
+            <td style=\"text-align: left;\"><strong style=\"text-align: left;\"><strong style=\"text-align: left;\">Wireframe</strong></strong></td>
+            <td style=\"text-align: left;\" colspan=\"5\">
+                <div class=\"content-wrapper\">
+                    <p><span style=\"color:var(--ds-text-accent-teal,#206a83);\">Create Cancel Expert Request Decsion  </span></p>
+                    <p><br></p>
+                    <p>
+                        <ac:image ac:height=\"250\">
+                            <ri:attachment ri:filename=\"image-2025-11-16_22-41-3.png\"></ri:attachment>
+                        </ac:image>
+                    </p>
+                    <p><br></p>
+                    <p><br></p>
+                </div>
+                <p><br></p>
+                <p><br></p>
+            </td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+    </tbody>
+</table>
+<h1>Parameters Mapping</h1>
+<p><br></p>
+<table class=\"relative-table wrapped\" style=\"width: 1179.0px;\">
+    <colgroup class=\"\">
+        <col class=\"\" style=\"width: 200.0px;\">
+        <col class=\"\" style=\"width: 112.0px;\">
+        <col class=\"\" style=\"width: 298.0px;\">
+        <col class=\"\" style=\"width: 285.0px;\">
+        <col class=\"\" style=\"width: 283.0px;\">
+    </colgroup>
+    <tbody class=\"\">
+        <tr class=\"\">
+            <th><strong>Field Name</strong></th>
+            <th><strong>Field Source  </strong></th>
+            <th><span style=\"color:var(--ds-text-accent-blue,#0055cc);\">Mapped Value</span>  </th>
+            <th><strong>Static Value</strong></th>
+            <th><strong>Validations / Comments </strong></th>
+        </tr>
+        <tr class=\"\">
+            <td class=\"highlight-#c1c7d0\" style=\"text-align: center;\" colspan=\"5\" data-highlight-colour=\"#c1c7d0\"><strong>EXP-BO-CASE  </strong></td>
+        </tr>
+        <tr class=\"\">
+            <td>
+                <p> requestId</p>
+            </td>
+            <td>Mapped Field  </td>
+            <td>
+                <div class=\"content-wrapper\">
+                    <p><u style=\"text-align: left;\">
+                            <ac:structured-macro ac:name=\"requirement\" ac:schema-version=\"1\" ac:macro-id=\"175bd28a-4ee5-48aa-b2f1-9e79de44ff35\">
+                                <ac:parameter ac:name=\"freetext\">Link</ac:parameter>
+                                <ac:parameter ac:name=\"type\">LINK</ac:parameter>
+                                <ac:parameter ac:name=\"key\">EXPERT-REQUEST-ID</ac:parameter>
+                                <ac:parameter ac:name=\"\"></ac:parameter>
+                            </ac:structured-macro><span class='requirement-definition' style='color: #0066cc; font-style: italic;'> (UC-Expert Support Request (قرار ندب الخبرة ): Property: • Basic Flow • 11 • System to call "Create Expert Request " As Per Integartion Guid and Send Fields as Mention in Paramter Mapping • If Suce...)</span>
+                        </u>Returned from <strong>C</strong><strong style=\"text-align: left;\">reate Expert Request </strong></p>
+                </div>
+            </td>
+            <td><br></td>
+            <td style=\"text-align: left;\"><br></td>
+        </tr>
+        <tr class=\"\">
+            <td>
+                <p>cancel Reason </p>
+            </td>
+            <td>Mapped Field </td>
+            <td>
+                <p>سبب العدول Selected from Judge from </p>
+            </td>
+            <td><br></td>
+            <td style=\"text-align: left;\">
+                <p>We Will Show Only <ac:link>
+                        <ri:page ri:content-title=\"cancelReason\"></ri:page>
+                    </ac:link>  With Status=Active </p>
+            </td>
+        </tr>
+        <tr class=\"\">
+            <td>
+                <p>otherReason </p>
+            </td>
+            <td>Mapped Field</td>
+            <td>أسباب أخرى as Entered from Judge </td>
+            <td><br></td>
+            <td style=\"text-align: left;\">
+                <p><br></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>

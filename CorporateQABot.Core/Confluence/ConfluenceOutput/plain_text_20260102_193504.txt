@@ -1,0 +1,1345 @@
+1. Use Case Properties
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Type 
+UseCase 
+
+
+
+
+
+| 
+
+
+Title
+
+
+
+
+| 
+
+
+Related
+
+
+
+
+| 
+Module | 
+
+
+
+
+
+
+
+DEFINITION 
+UC-353 
+
+(UC-Cancel Expert Support Request ( إصدار قرار العدول عن ندب الخبرة ): Related: • Create • BJS-5488 Title: • إصدار قرار العدول عن ندب الخبرة • (Cancel Expert Support Request ) Type: UseCase) 
+
+
+
+
+| 
+
+
+إصدار قرار العدول عن ندب الخبرة  
+
+
+(Cancel Expert Support Request )
+
+
+
+
+| 
+
+
+
+
+Create 
+
+
+
+
+Jira 
+078f5cb7-a93b-3298-82de-d699ab4c4d1d 
+BJS-5488 
+
+
+
+| 
+
+| 
+
+
+
+
+
+
+2.   Use Case Specifications
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Description
+
+
+| 
+
+This use case should descript the process of creating Request  (العدول عن التصفية و رفع حجز )
+
+
+| 
+
+
+
+
+Primary Actor
+
+
+| 
+
+
+
+
+Link 
+LINK 
+ACT-008 
+
+(Actor Catalogue: ActorNameAr: قاضي ActorNameEn: Judge Description: • إصدار الأوامر، القرارات، الاحكام • استعراض الطلبات • ارفاق المرفقات للطلبات • الاطلاع على المرفقات...) ,   
+Link 
+LINK 
+ACT-006 
+
+(Actor Catalogue: ActorNameAr: • امين سر الدائرة ActorNameEn: judicial circuit Secretary Description: • استعراض الطلبات • ارفاق المرفقات على الطلبات • إعادة الطلبات لقس...)  
+
+
+Hint : Judicial Circuit Secretary Can View Only result Without taking any Action 
+
+
+
+
+| 
+
+
+
+
+Triggering Event
+
+
+| 
+
+
+
+-
+
+
+| 
+
+
+
+
+Pre-Condition(s)
+
+
+| 
+
+
+
+There is previous  Expert Support Request Decsion    
+Link 
+LINK 
+UC-354 
+
+(UC-Expert Support Request (قرار ندب الخبرة ): Related: • ⁠⁠Create • BJS-5337 Title: • قرار ندب الخبرة • (Expert Support Request) Type: UseCase) 
+
+
+Status Is not  in ( 
+
+
+
+
+
+
+
+
+Link 
+LINK 
+CASE-EXP-STS-011 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: التقرير تحت مراجعة القاضي) 
+
+
+  
+Link 
+LINK 
+CASE-EXP-STS-014 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: تم رفض التقرير من أحد أطراف الدعوى وإعادته للخبير) 
+
+
+
+
+Link 
+LINK 
+CASE-EXP-STS-013 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: تم اعتماد التقرير تلقائيًا من النظام) 
+
+
+
+
+Link 
+LINK 
+CASE-EXP-STS-015 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: تم رفع التقرير) 
+
+
+
+
+Link 
+LINK 
+CASE-EXP-STS-017 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: تم إلغاء الطلب) 
+
+
+
+
+
+
+
+
+
+)
+
+
+This service will allow judge to cancel an expert request which is not yet in Report 
+review state (or final report or completed) 
+
+
+
+
+| 
+
+
+
+
+Post-Condition(s)
+
+
+| 
+Property Liquidation Withdrawal Request is Created Successfully  | 
+
+
+
+
+ 
+
+
+Basic Flow
+
+
+| 
+
+#
+
+
+| 
+
+Step
+
+
+| 
+Other Flows | 
+
+
+
+
+1
+
+| 
+
+
+
+User click on Button  (العدول عن ندب الخبرة ) From Process Flow screen    
+
+
+
+Or  
+
+
+كإجراء قضائى جديد من داخل طلبات التنفيذ 
+
+
+
+
+| 
+A1,E10  | 
+
+
+
+
+2
+
+| 
+
+
+
+System include ::  UC - Check user can access the resource 
+
+
+
+
+| 
+
+| 
+
+
+
+
+3
+
+| 
+
+
+System to Show Page   as Per data Wireframe Create Cancel Expert Request Decsion
+
+
+System to Show Set below Field value  
+
+
+
+execution request   رقم طلب التنفيذ
+
+expert Request IDرقم طلب ندب الخبرة
+
+
+
+
+| 
+E10 , E9, E7 | 
+
+
+
+
+4
+
+| 
+
+
+
+
+If Opend From الاجراءات القضائيه لطلب التنفيذ 
+
+
+
+User To select رقم طلب ندب الخبرة 
+
+
+Else If Open From Process Flow screen
+
+
+
+System to Populate Value=  Current Expert Request  & Dimmed Field 
+
+
+
+
+System to Show 
+
+
+
+expert Request Status حاله طلب ندب الخبرة 
+
+
+
+
+| 
+E10 , E9 | 
+
+
+
+
+5
+
+| 
+
+
+System  generate the Decsion text and allow judge to edit 
+
+Link 
+LINK 
+JDF-049 
+
+(نصوص النماذج: Name: "قرار العدول عن ندب الخبرة") 
+ 
+
+
+
+
+| 
+
+| 
+
+
+
+
+6 
+
+| 
+
+
+User to Termination Reason , If Other is Selected "Free Text Area " will be Enable So uer Can Add his Reason 
+
+
+Hint : Show Only Active reason ( Reason to be revisted By BA and May be updated) 
+
+
+
+
+| 
+
+E6,E4
+
+
+| 
+
+
+
+
+9
+
+| 
+
+
+
+
+User to edit Decsion Text and Press  "اصدار القرار "  , System to show Confirmation Message 
+
+Link 
+LINK 
+MSG-665 
+
+(System Messages: Category: Confirmation Channel: Portal Message Text (AR): هل أنت متأكد من اصدار قرار العدول عن طلب ندب خبير (رقم الطلب) والموجه إلى( اسم جهة تنفيذ الط...) 
+
+
+If User Confirm   ,   System to perform Below 
+
+
+
+Show messge   
+
+Link 
+LINK 
+MSG-358 
+
+(System Messages: Category: Info Channel: Portal Message Text (AR): تم إصدار ( إمر يقاف التنفيذ/قرار يقاف التنفيذ/قرار اثبات ترك طلب التنفيذ/ قرار إتمام التنفيذ/حكم إثب...)  
+
+
+update Cancel Expert Request Status  حالة طلب العدول عن  ندب الخبرة   
+
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-001 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: • تحت أجراء إنشاء طلب العدول عن ندب الخبير • عند ارسال طلب العدول عن ندب الخبرة الى الى منصة خبرة • Judge • EXP-ACT-002) 
+
+
+System to Save   Expert request Type   = 
+
+Link 
+LINK 
+EXP-ACT-002 
+
+(Expert Support Action Type: Property: • Cancel Expert Support Request • العدول عن ندب الخبرة) 
+
+
+
+
+
+| 
+
+E4, E5 ,E6,E7,E8,E9,E10
+
+
+| 
+
+
+
+
+10
+
+| 
+
+
+System to call " Cancel Expert Request  " As Per   Integartion Guid   and Send Fields as Mention in Paramter Mapping  
+
+
+If Sucess , System to Update 
+
+
+
+update Cancel Expert Request Status     حالة طلب العدول عن  ندب الخبرة   
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-002 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: • تم إنشاء طلب العدول عن ندب الخبير • ٍSystem • EXP-ACT-002)
+
+update Expert Request Status     حالة'طلب ندب الخبرة  
+
+Link 
+LINK 
+CASE-EXP-STS-017 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: تم إلغاء الطلب)  
+
+
+
+If failed
+
+
+
+Updated Cancel Expert Request Status   حالة طلب العدول عن  ندب الخبرة   
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-003 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: • فشل إنشاء طلب العدول عن ندب الخبير • System • EXP-ACT-002)  
+
+
+
+
+| 
+
+E1,E2,E3
+
+
+| 
+
+
+
+
+13
+
+
+
+| 
+
+
+
+
+System to send Nabaa SMS to selected Defendant  
+
+Link 
+LINK 
+MSG-159 
+
+(System Messages: Channel: SMSE-mail Message Text (AR): تم صدور (أمر####/قرار####) برقم (####) في الطلب رقم (رقم طلب الارشاد/وقف المهل/تمديد وقف المهل/ إتمامالتنفيذ/فرض...) 
+
+
+Make Sure Notification is Send To All Stack Holder including Representative IE أيضا التأكيد على أن التبليغ يكون لجميع أطراف طلب التنفيذ شاملا (طالب التنفيذ والمنفذ ضده الذي صدر اتجاه قرار ندب الخبرة)
+
+
+ وأيضا جميع الممثلين و الوكلاء و جميع المفوضين في حال وجد للطرفين       )
+
+
+
+
+| 
+
+| 
+
+
+
+
+15
+
+| 
+
+End
+
+| 
+
+| 
+
+
+
+
+Alternative Flows
+
+
+ 
+
+
+
+
+ 
+
+
+| 
+
+A1
+
+
+| 
+
+user Press Back 
+
+
+| 
+
+| 
+
+
+
+
+1
+
+
+| 
+
+
+  User can logout at anytime
+
+
+
+User clicks on "عودة" to get back to the main request page list     
+
+Link 
+LINK 
+MSG-058 
+
+(System Messages: Message Text (AR): هل أنت متأكد من رغبتك بالخروج من صفحة اصدار القرار؟)       
+
+
+
+
+
+| 
+
+| 
+
+
+
+
+2
+
+
+| 
+
+End
+
+
+| 
+
+| 
+
+
+
+
+Exceptions
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+| 
+
+
+E1 : Technical error While Communicating with ESR
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+System failed to sent the request to ERS   or system received "failed response" From ERS .
+
+
+
+
+System will display  the following MSG > 
+Link 
+LINK 
+MSG-116 
+
+(System Messages: Category: error Channel: Portal Message Text (AR): لأسباب تقنية فشل إرسال طلب (#اسم الامر/القرار)) 
+
+
+| 
+
+| 
+
+
+
+
+E2 : Could not connect to the API
+
+
+| 
+
+| 
+
+
+
+
+
+System will retry for 10 times "3 times immediately and 7 times exponential polling" incase   System could not connect to the API
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E3: Error Returned from Service 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+System will raise exception input error  Same As Mention in ERS  Block   errorList  in the following cases :
+
+
+An error returned in errorList Parameter 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+  E4:   Must Add Reason text 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+  System will raise exception input error 
+
+Link 
+LINK 
+MSG-660 
+
+(System Messages: Category: Error Channel: Portal Message Text (AR): يرجى إدخال تفاصيل "أسباب أخرى" عند اختيار سبب العدول (أخرى).) 
+
+
+In  case User Select "other " from reason and Didnt Fill Reason text 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E5 : Missing input   data  
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+System will raise exception input error   
+
+Link 
+LINK 
+MSG-006 
+
+(UC-View Stop Deadline Extend Requests By Dispatch User: Category: Error Message Text (AR): الحقل مطلوب Message Text (EN): Mandatory field) 
+
+
+  if Missing mandatory Field 
+
+
+
+نص قرارالعدول عن  ندب الخبرة 
+
+سبب العدول 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E6 :     Invalid Length of  Reason text 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+  System will raise exception input error 
+
+Link 
+LINK 
+MSG-664 
+
+(System Messages: Category: Error Channel: As an administrator , I want to view user Information Message Text (AR): لقد تجاوزت الحد الأقصى المسموح به للحروف في هذا الحق...)  
+
+
+If Length Field "Other Reason" > 500 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E7 : Status of the execution order not allow to issue Cancel Expert Support Decsion 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+System will raise exception input error     
+
+Link 
+LINK 
+MSG-146 
+
+(UC-List Support Requests By (Defendant / plaintiff )/ Delegates: Category: Error Channel: Portal Message Text (AR): لا يمكن تقديم طلب(الإرشاد/ وقف المهل/ تمديد وقف المهل/ إتمام التنفيذ/فرض الغرامة/ إيقاف التنفيذ/الا...)     in the following cases :
+
+
+
+in case execution order status in  (م سودة محذوفة-معاد لاستكمال النواقص -م حفوظ -تم التنفيذ- مغلق -     مقيد بانتظار الإحالة   -  م سودة )
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E8: Expert Support  not allow to issue Cancel Expert Support Decsion 
+
+
+
+
+| 
+
+| 
+
+
+
+
+System will raise exception input error   
+
+Link 
+LINK 
+MSG-661 
+
+(System Messages: Category: Error Channel: Portal Message Text (AR): لا يمكن تقديم طلب عدول عن طلب ندب الخبرة، لأن حالة طلب الندب الحالية لا تسمح بذلك) 
+    in the following cases :
+
+
+This service will allow judge to cancel an expert request which is not yet in Report 
+review state (or final report or completed) 
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+E9: in Progress Cancel request For Same Expert Support request  | 
+
+| 
+
+
+
+
+
+System will raise exception input error   
+
+Link 
+LINK 
+MSG-662 
+
+(System Messages: Category: Error Channel: Portal Message Text (AR): لا يمكن تقديم طلب عدول عن ندب الخبرة لوجود طلب سابق تحت الإجراء لدى المنصة.) 
+    in the following cases :
+
+
+Cancekl expert request Status " For Same Expert request " = 
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-001 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: • تحت أجراء إنشاء طلب العدول عن ندب الخبير • عند ارسال طلب العدول عن ندب الخبرة الى الى منصة خبرة • Judge • EXP-ACT-002)  
+
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+E10 : Cancel request For Same Expert Support request  Already Done   | 
+
+| 
+
+
+
+
+
+System will raise exception input error   
+
+Link 
+LINK 
+MSG-663 
+
+(System Messages: Category: Error Channel: Portal Message Text (AR): لا يمكن تقديم طلب العدول، لأن العدول تم مسبقًا.) 
+    in the following cases :
+
+
+Cancekl expert request Status " For Same Expert request " = 
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-002 
+
+(Expert Request Status حالات طلب ندب الخبرة: Property: • تم إنشاء طلب العدول عن ندب الخبير • ٍSystem • EXP-ACT-002)
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+
+| 
+
+| 
+
+
+
+
+| 
+
+| 
+
+
+
+
+| 
+
+| 
+
+
+
+
+Business / System Rules
+
+
+| 
+
+
+
+
+Link 
+LINK 
+BR-404 
+
+(Business Rules: Business Rule: إذا كانت قيمة "سبب العدول" هي (أخرى)، يصبح حقل "أسباب أخرى" إجباري Property: 400) 
+
+Link 
+LINK 
+BR-405 
+
+(Business Rules: Business Rule: يتم عرض نص قرار العدول عن ندب الخبير لدى طالب التنفيذ والقاضي في قائمة الإجراءات القضائية داخل تفاصيل طلب التنفيذ، ويتم عرضها للمنفذ ضد...) 
+
+Link 
+LINK 
+BR-406 
+
+(Business Rules: Business Rule: الحد الأقصى لطول النص في حقل "أسباب أخرى" هو 500 حرف، Property: 402) 
+
+Link 
+LINK 
+BR-407 
+
+(Business Rules: Business Rule: لا يمكن إصدار قرار العدول إذا كانت حالة طلب ندب الخبرة في حالة مراجعة التقرير أو بعد إصدار التقرير النهائي أو تم إغلاقه أو تم دفع الأتع...) 
+
+Link 
+LINK 
+BR-408 
+
+(Business Rules: Business Rule: عند إصدار قرار العدول عن ندب الخبير، يتم إشعار طالب التنفيذ والمنفذ ضده Property: 404)  
+
+
+
+
+| 
+
+| 
+
+
+
+Related Business Use Case (BRS/BC) | 
+
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+Wireframe | 
+
+
+Create Cancel Expert Request Decsion  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+
+Parameters Mapping
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Field Name | 
+Field Source   | 
+Mapped Value    | 
+Static Value | 
+Validations / Comments  | 
+
+
+
+EXP-BO-CASE   | 
+
+
+
+
+ requestId
+
+
+| 
+Mapped Field   | 
+
+
+
+
+Link 
+LINK 
+EXPERT-REQUEST-ID 
+
+(UC-Expert Support Request (قرار ندب الخبرة ): Property: • Basic Flow • 11 • System to call "Create Expert Request " As Per Integartion Guid and Send Fields as Mention in Paramter Mapping • If Suce...) 
+Returned from  C reate Expert Request 
+
+
+
+
+| 
+
+| 
+
+| 
+
+
+
+
+cancel Reason 
+
+
+| 
+Mapped Field  | 
+
+سبب العدول Selected from Judge from 
+
+
+| 
+
+| 
+
+We Will Show Only  
+
+  With Status=Active 
+
+
+| 
+
+
+
+
+otherReason 
+
+
+| 
+Mapped Field | 
+أسباب أخرى as Entered from Judge  | 
+
+| 
+
+
+
+|
