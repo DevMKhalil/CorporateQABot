@@ -35,7 +35,8 @@ var confluenceService = new ConfluenceService(string.Empty,string.Empty);
 //await ollamaChains.CreateRunnableWith_ConversationBufferWindowMemory_History();
 //await ollamaChains.CreateRunnableWith_ConversationSummaryMemory_History();
 //await ollamaChains.CreateRunnableWith_ConversationBufferMemory_History_WithSavingHistory();
-await confluenceService.LoadPageContextAsync(string.Empty);
+//await confluenceService.LoadPageContextAsync(string.Empty);
+await agentsWithOllma.Create_Agent_For_Generate_Prompts();
 
 //await agentsWithOllma.Create_Agent_For_Generate_Keywords();
 

@@ -46,140 +46,257 @@ Analyze the provided Confluence HTML use case specification document and extract
 **Your Analysis MUST Extract and Structure the Following Sections**:
 
 ### 1. **Use Case Overview**
-   - Use Case ID (e.g., UC-353)
-   - Title (both Arabic and English)
-   - Description
-   - Related JIRA tickets (e.g., BJS-5488)
-   - Module/Component information
+   - Use Case ID (e.g., UC-XXX) - extract the actual ID from the document
+   - Title (in all available languages - typically Arabic and English)
+   - Description/Purpose of the use case
+   - Related JIRA tickets or tracking IDs (e.g., BJS-XXXX)
+   - Module/Component/Domain information
+   - Use case type and category
 
 ### 2. **Actors and Permissions**
-   - Primary Actors (with reference IDs like ACT-008, ACT-006)
-   - Actor names in Arabic and English
-   - Actor capabilities and restrictions
+   - Primary Actors (with reference IDs like ACT-XXX)
+   - Actor names in all available languages
+   - Actor roles and responsibilities
+   - Actor capabilities and permissions
+   - Actor restrictions and limitations
    - Permission-based behavior differences
+   - Secondary actors (if any)
 
 ### 3. **Pre-Conditions**
-   - All prerequisite conditions that must be met
+   - All prerequisite conditions that must be met before the use case can execute
    - Required system states
    - Dependent use cases (with UC-XXX references)
-   - Excluded statuses (e.g., CASE-EXP-STS-011, CASE-EXP-STS-017)
+   - Required data or entities
+   - Excluded statuses or states (with status code references)
+   - User authentication/authorization requirements
+   - Any other constraints
 
 ### 4. **Post-Conditions**
-   - Expected system state after completion
+   - Expected system state after successful completion
+   - Expected system state after failure
    - Data persistence requirements
-   - Status changes
+   - Status changes and state transitions
+   - Side effects on other systems or components
 
-### 5. **Basic Flow (Step-by-Step)**
+### 5. **Triggering Events**
+   - Events or actions that initiate this use case
+   - User actions
+   - System events
+   - Scheduled triggers
+   - Integration triggers
+
+### 6. **Basic Flow (Step-by-Step)**
    - Extract EVERY step with its step number
-   - User actions and system responses
-   - Conditional logic (If/Else/Or scenarios)
-   - UI elements to display (fields, buttons, dropdowns)
-   - Field population rules (auto-populate, dimmed, editable)
-   - System integrations/API calls (with integration guide references)
-   - Status updates and transitions
-   - Notification/messaging requirements (MSG-XXX references)
-   - Template references (e.g., JDF-049)
+   - User actions at each step
+   - System responses and behaviors
+   - Conditional logic (If/Else/Or/Switch scenarios)
+   - UI elements to display (pages, forms, fields, buttons, dropdowns, checkboxes, etc.)
+   - Field population rules (auto-populate, dimmed/disabled, editable, read-only)
+   - Data validation at each step
+   - System integrations/API calls (with integration guide references or URLs)
+   - Status updates and state transitions
+   - Notification/messaging requirements (with message reference IDs)
+   - Template references (document/report templates)
+   - Navigation and flow control
+   - Any included sub-use cases
 
-### 6. **Alternative Flows**
-   - All alternative flow IDs (A1, A2, etc.)
+### 7. **Alternative Flows**
+   - All alternative flow IDs (A1, A2, A3, etc.)
+   - Descriptive name/title for each alternative flow
    - Trigger conditions for each alternative flow
-   - Steps within each alternative flow
-   - Return points to main flow
+   - Steps within each alternative flow (numbered)
+   - Decision points and branching logic
+   - Return points to main flow or other flows
+   - Final outcomes of each alternative flow
 
-### 7. **Exception Flows**
-   - All exception IDs (E1, E2, E3... E10)
-   - Exception trigger conditions
-   - Error messages (MSG-XXX references with Arabic text)
-   - Retry logic (e.g., ""retry 10 times: 3 immediate + 7 exponential polling"")
-   - Fallback behaviors
-   - User feedback requirements
+### 8. **Exception Flows**
+   - All exception IDs (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, etc.)
+   - Descriptive name/title for each exception
+   - Exception trigger conditions (what causes this exception)
+   - Error detection mechanism
+   - Error messages (with MSG-XXX references and text in all languages)
+   - Retry logic and policies (e.g., retry counts, exponential backoff)
+   - Fallback behaviors and recovery mechanisms
+   - User feedback and guidance
+   - Logging and auditing requirements
+   - Impact on system state
 
-### 8. **Business Rules**
-   - All BR-XXX references (e.g., BR-404, BR-405, BR-406, BR-407, BR-408)
-   - Validation rules (required fields, length limits, conditional requirements)
-   - Conditional logic rules
-   - Display rules
+### 9. **Business Rules**
+   - All BR-XXX or business rule references
+   - Rule descriptions in all available languages
+   - Validation rules (required fields, length limits, format requirements, range constraints)
+   - Conditional logic rules (if X then Y)
+   - Calculation rules
+   - Display rules (show/hide, enable/disable)
    - Notification rules
+   - Data transformation rules
+   - Authorization rules
+   - Priority and ordering rules
 
-### 9. **Field Specifications and Validations**
-   - Field names (Arabic and English)
-   - Field types (text, dropdown, checkbox, etc.)
+### 10. **Field Specifications and Validations**
+   - Field names (in all available languages)
+   - Field labels and placeholders
+   - Field types (text, number, date, dropdown, checkbox, radio, file upload, etc.)
    - Mandatory vs optional fields
-   - Field length limits (e.g., max 500 characters)
-   - Conditional visibility rules
-   - Default values
-   - Validation error messages
+   - Field length limits (min/max characters)
+   - Format requirements (regex, patterns)
+   - Range constraints (min/max values, date ranges)
+   - Conditional visibility rules (show/hide based on other fields)
+   - Conditional editability (enable/disable based on conditions)
+   - Default values and initial states
+   - Dropdown/select options and data sources
+   - Validation error messages (with MSG-XXX references)
+   - Field dependencies and relationships
+   - Field grouping and sections
 
-### 10. **API Integration Requirements**
-   - Integration service name (e.g., ""Cancel Expert Request"")
-   - Integration guide URL
-   - Parameter mapping table fields:
-     * Field Name
-     * Field Source (Mapped Field / Static Value)
-     * Mapped Value (source field/variable)
-     * Static Value
-     * Validations/Comments
-   - Success response handling
-   - Failure response handling
+### 11. **API Integration Requirements**
+   - Integration service/API names
+   - Integration guide URLs or documentation references
+   - Endpoint details (if available)
+   - Request/response formats
+   - Parameter mapping tables with:
+     * Field Name / Parameter Name
+     * Field Source (Mapped Field, Static Value, Calculated, System Generated)
+     * Mapped Value (source field/variable/expression)
+     * Static Value (if applicable)
+     * Data Type
+     * Required/Optional
+     * Validations/Comments/Constraints
+   - Authentication/authorization requirements
+   - Success response handling and expected outcomes
+   - Failure response handling and error recovery
    - Status updates on success/failure
+   - Timeout and retry policies
+   - Data transformation requirements
 
-### 11. **UI/Wireframe Requirements**
-   - Page/screen name
-   - Layout description
-   - Field arrangement
-   - Button labels and actions
-   - Conditional UI elements
+### 12. **UI/Wireframe Requirements**
+   - Page/screen names
+   - Page layout and structure
+   - Section organization
+   - Field arrangement and grouping
+   - Button labels, positions, and actions
+   - Link labels and destinations
+   - Tab organization
+   - Modal/popup specifications
+   - Conditional UI elements (show/hide rules)
+   - Responsive design considerations
+   - Accessibility requirements
+   - Wireframe images or references (note their presence)
 
-### 12. **Status Management**
-   - All status codes (e.g., CANCEL-CASE-EXP-STS-001, CANCEL-CASE-EXP-STS-002, CASE-EXP-STS-017)
-   - Status transition rules
+### 13. **Status Management and State Transitions**
+   - All status codes (e.g., STATUS-XXX, CASE-EXP-STS-XXX, etc.)
+   - Status names in all available languages
+   - Status descriptions
+   - Status transition rules (from status X to status Y)
+   - Conditions for each transition
    - Actor responsible for each status change
-   - Action type references (e.g., EXP-ACT-002)
+   - Action type references (e.g., ACT-XXX)
+   - System vs user-initiated transitions
+   - Reversible vs irreversible transitions
+   - Status-based permissions and visibility
 
-### 13. **Notification Requirements**
-   - Notification triggers
-   - Recipient lists (including representatives, delegates, attorneys)
-   - Message templates (MSG-XXX)
-   - Delivery channels (SMS, Email, Portal)
+### 14. **Notification Requirements**
+   - Notification triggers (events that cause notifications)
+   - Recipient determination rules
+   - Recipient lists (users, roles, representatives, delegates, attorneys, stakeholders)
+   - Message templates (with MSG-XXX references)
+   - Message content (in all available languages)
+   - Delivery channels (SMS, Email, Portal, Push, etc.)
+   - Notification timing (immediate, scheduled, batched)
+   - Notification priority
+   - Retry policy for failed notifications
 
-### 14. **System Messages Catalog**
-   - All MSG-XXX references
-   - Message category (Error, Info, Confirmation, Warning)
-   - Message text in Arabic
-   - Display context
+### 15. **System Messages Catalog**
+   - All MSG-XXX or message references
+   - Message category (Error, Info, Confirmation, Warning, Success)
+   - Message severity/priority
+   - Message text in all available languages
+   - Display context (when/where the message appears)
+   - Message type (modal, toast, inline, etc.)
+   - User actions available in response to message
+   - Message parameters/placeholders
+
+### 16. **Data and Entity Requirements**
+   - Entities involved in the use case
+   - Data attributes and properties
+   - Data relationships
+   - Data persistence requirements
+   - Data validation rules
+   - Data sources
+   - Data transformations
+
+### 17. **Security and Authorization**
+   - Access control requirements
+   - Role-based permissions
+   - Data sensitivity classifications
+   - Audit logging requirements
+   - Encryption requirements
+   - Compliance requirements
+
+### 18. **Performance and Non-Functional Requirements**
+   - Response time requirements
+   - Throughput requirements
+   - Concurrency requirements
+   - Scalability considerations
+   - Availability requirements
+
+### 19. **Related Use Cases and Dependencies**
+   - Use cases that are included/extended by this use case
+   - Use cases that this use case includes/extends
+   - Shared components or services
+   - Integration dependencies
 
 **Output Format Requirements**:
 
 Your output MUST be structured as a clear, hierarchical document with:
-- **Section headers** for each category above
+- **Section headers** for each category above (only include sections that have content in the input document)
 - **Bullet points** for lists
-- **Numbered steps** for flows
-- **Tables** for parameter mappings (if applicable in text format)
-- **Reference IDs preserved** exactly as they appear (UC-XXX, BR-XXX, MSG-XXX, ACT-XXX, etc.)
-- **Bilingual content** clearly separated (Arabic | English)
-- **Cross-references** highlighted (e.g., ""See Exception E4"", ""Triggers Alternative Flow A1""
+- **Numbered steps** for flows (preserve original step numbers if present)
+- **Tables** for parameter mappings, field specifications, and structured data (use markdown or text format)
+- **Reference IDs preserved** exactly as they appear (UC-XXX, BR-XXX, MSG-XXX, ACT-XXX, STATUS-XXX, etc.)
+- **Multilingual content** clearly separated and labeled (e.g., Arabic | English)
+- **Cross-references** highlighted and explicit (e.g., ""See Exception E4"", ""Triggers Alternative Flow A1"", ""References BR-404"")
+- **Inline notes** for clarifications or implicit requirements discovered during analysis
 
 **Critical Requirements**:
-1. ✅ **Zero Information Loss**: Extract EVERY detail, even seemingly minor ones
-2. ✅ **Preserve Traceability**: Keep all reference IDs intact (UC-XXX, BR-XXX, MSG-XXX, etc.)
-3. ✅ **Maintain Arabic Text**: Do not translate or lose Arabic content
-4. ✅ **Explicit Edge Cases**: List all exception scenarios with their exact conditions
-5. ✅ **Implementation-Ready**: Structure output so developers know EXACTLY what to build
-6. ✅ **Clear Dependencies**: Show how components connect (flows → exceptions, fields → validations)
+1. ✅ **Zero Information Loss**: Extract EVERY detail, even seemingly minor ones like hints, notes, or inline comments
+2. ✅ **Preserve Traceability**: Keep all reference IDs intact exactly as written (UC-XXX, BR-XXX, MSG-XXX, etc.)
+3. ✅ **Maintain Multilingual Text**: Do not translate or lose content in any language (especially Arabic, English, or others)
+4. ✅ **Explicit Edge Cases**: List all exception scenarios with their exact conditions and triggers
+5. ✅ **Implementation-Ready**: Structure output so developers know EXACTLY what to build, including technical details
+6. ✅ **Clear Dependencies**: Show how components connect (flows → exceptions, fields → validations, statuses → transitions)
+7. ✅ **Complete Context**: Include background information, business context, and rationale where provided
+8. ✅ **Actionable Details**: Every requirement should be specific enough to implement or test
 
-**Quality Check**:
-Before finalizing your output, verify:
-- [ ] All step numbers from Basic Flow are captured (1, 2, 3, 4, 5, 6, 9, 10, 13, 15)
-- [ ] All exception flows are documented (E1 through E10)
-- [ ] All alternative flows are documented (A1)
-- [ ] All business rules are captured (BR-404, BR-405, BR-406, BR-407, BR-408)
-- [ ] All message references are preserved (MSG-665, MSG-358, MSG-660, MSG-664, MSG-006, MSG-116, MSG-661, MSG-662, MSG-663, MSG-159, MSG-058, MSG-146)
-- [ ] All status codes are documented
-- [ ] Parameter mapping table is complete
-- [ ] API integration details are clear
+**Intelligent Analysis Instructions**:
+- **Identify implicit requirements**: If the specification implies a requirement without stating it explicitly, note it
+- **Detect patterns**: Recognize common patterns (e.g., CRUD operations, approval workflows, status machines)
+- **Flag ambiguities**: If something is unclear or contradictory, note it explicitly
+- **Suggest clarifications**: If critical information seems missing, note what should be clarified
+- **Preserve original numbering**: Keep step numbers, flow IDs, and reference IDs exactly as in source
+- **Extract from tables**: Parse HTML tables completely, preserving structure and relationships
+- **Handle nested structures**: Preserve hierarchical relationships in lists and tables
+
+**Quality Validation Checklist**:
+Before finalizing your output, systematically verify:
+- [ ] All step numbers from Basic Flow are captured with their content
+- [ ] All exception flows are documented with their IDs, triggers, and steps
+- [ ] All alternative flows are documented with their IDs, triggers, and steps
+- [ ] All business rules are captured with their BR-XXX IDs and complete descriptions
+- [ ] All message references (MSG-XXX) are preserved with their text in all languages
+- [ ] All status codes and transitions are documented
+- [ ] All actors and their permissions are listed
+- [ ] All pre-conditions and post-conditions are captured
+- [ ] All field specifications including validations are complete
+- [ ] Parameter mapping table is complete with all columns
+- [ ] API integration details include success and failure handling
+- [ ] UI/wireframe details are extracted
+- [ ] Notification requirements specify recipients and channels
+- [ ] Cross-references between sections are maintained
+- [ ] No section of the original document is ignored or skipped
 
 **Expected Outcome**:
-A comprehensive, structured requirements document that a developer or AI coding assistant can use to implement the ""Cancel Expert Support Request"" feature with 100% accuracy, covering all flows, validations, integrations, and edge cases without needing to refer back to the original HTML specification.
+A comprehensive, structured requirements document that a developer or AI coding assistant can use to implement the use case with 100% accuracy, covering all flows, validations, integrations, and edge cases without needing to refer back to the original HTML specification. The document should be self-contained, complete, and immediately actionable.
 ");
         }
     }
