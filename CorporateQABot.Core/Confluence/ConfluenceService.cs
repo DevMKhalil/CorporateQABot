@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace CorporateQABot.Core.Confluence
 {
@@ -19,32 +19,47 @@ namespace CorporateQABot.Core.Confluence
 
         public ConfluenceService(string baseUrl, string token)
         {
-            _baseUrl = baseUrl.TrimEnd('/');
-            _token = token;
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //_baseUrl = baseUrl.TrimEnd('/');
+            //_token = token;
+            //_httpClient = new HttpClient
+            //{
+            //    BaseAddress = new Uri(_baseUrl)
+            //};
+            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+            //_httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task LoadPageContextAsync(string wikiUrl)
+        public async Task<string> LoadPageContextAsync(string wikiUrl)
         {
             // Parse the URL to extract page ID and space key
-            var (pageId, spaceKey) = ParseConfluenceUrl(wikiUrl);
+            // var (pageId, spaceKey) = ParseConfluenceUrl(wikiUrl);
 
             // Step 1: Get the page HTML
-            var rawHtml = await GetPageHtmlAsync(pageId);
+            // var rawHtml = await GetPageHtmlAsync(pageId);
 
             // Step 2: Get the requirements from the magic URL
-            var requirements = await GetRequirementsFromMagicUrlAsync(spaceKey, pageId);
+            // var requirements = await GetRequirementsFromMagicUrlAsync(spaceKey, pageId);
+
+            #region Read From Files
+            // Get the directory where this source file is located
+            var serviceDirectory = GetSourceDirectory();
+            var resourcesDirectory = Path.Combine(serviceDirectory, "Resources");
+
+            // Read HTML from local file instead
+            var htmlFilePath = Path.Combine(resourcesDirectory, "HtmlPage.html");
+            var rawHtml = File.Exists(htmlFilePath) ? await File.ReadAllTextAsync(htmlFilePath) : string.Empty;
+
+            // Read requirements from local JSON file instead
+            Dictionary<string, RequirementInfo> requirements = await GetRequirementsFromFileAsync(resourcesDirectory); 
+            #endregion
 
             // Step 3: Inject definitions into HTML
             var enrichedHtml = InjectDefinitionsIntoHtml(rawHtml, requirements);
 
             // Step 4: Convert to plain text for LLM
             var plainText = ConvertToPlainText(enrichedHtml, requirements);
+
+            return plainText;
         }
 
         public async Task<string> GetPageHtmlAsync(string pageId)
@@ -170,56 +185,124 @@ namespace CorporateQABot.Core.Confluence
         {
             try
             {
-                var wrappedHtml = $"<root xmlns:ac='http://www.atlassian.com/schema/confluence/4/ac/' xmlns:ri='http://www.atlassian.com/schema/confluence/4/ri/'>{html}</root>";
-                var root = XElement.Parse(wrappedHtml);
+                Console.WriteLine($"Raw HTML length: {html?.Length ?? 0}");
+                
+                if (string.IsNullOrWhiteSpace(html))
+                {
+                    Console.WriteLine("HTML is empty or null");
+                    return html ?? string.Empty;
+                }
 
-                var macros = root.Descendants()
-                    .Where(n => n.Name.LocalName == "structured-macro" &&
-                            n.Attribute(XName.Get("name", "http://www.atlassian.com/schema/confluence/4/ac/"))?.Value == "requirement")
+                // Load HTML using HtmlAgilityPack (handles malformed HTML gracefully)
+                var htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(html);
+
+                // Find all ac:structured-macro elements with ac:name="requirement"
+                // We need to look for nodes where the name contains "structured-macro"
+                var allNodes = htmlDoc.DocumentNode.Descendants().ToList();
+                Console.WriteLine($"Total nodes in document: {allNodes.Count}");
+
+                var requirementMacros = allNodes
+                    .Where(n => n.Name.Contains("ac:structured-macro") &&
+                                n.Attributes.Any(a => a.Name == "ac:name" && a.Value == "\\\"requirement\\\""))
                     .ToList();
 
-                foreach (var macro in macros)
+                // If still not found, try a more generic approach
+                if (!requirementMacros.Any())
                 {
-                    var keyParam = macro.Descendants()
-                        .FirstOrDefault(p => p.Name.LocalName == "parameter" &&
-                                            p.Attribute(XName.Get("name", "http://www.atlassian.com/schema/confluence/4/ac/"))?.Value == "key");
+                    Console.WriteLine("No macros found with first approach, trying alternative...");
+                    requirementMacros = allNodes
+                        .Where(n => n.OuterHtml.Contains("ac:name=\"requirement\"") ||
+                                   n.OuterHtml.Contains("ac:name=\\\"requirement\\\""))
+                        .ToList();
+                }
 
-                    if (keyParam != null)
+                if (requirementMacros != null && requirementMacros.Any())
+                {
+                    Console.WriteLine($"Found {requirementMacros.Count} requirement macros");
+
+                    foreach (var macro in requirementMacros)
                     {
-                        var key = keyParam.Value.Trim();
-                        var keyBadge = new XElement("span",
-                            new XAttribute("class", "key-badge"),
-                            key
-                        );
-
-                        if (definitions.TryGetValue(key, out var info))
+                        Console.WriteLine($"Macro HTML: {macro.OuterHtml.Substring(0, Math.Min(200, macro.OuterHtml.Length))}...");
+                        
+                        // Find the key parameter - look for any node containing "key"
+                        var allDescendants = macro.Descendants().ToList();
+                        var keyParam = allDescendants
+                            .FirstOrDefault(n => n.Name.Contains("ac:parameter") && 
+                                                 n.Attributes.Any(a => a.Name == "ac:name" && a.Value == "\\\"key\\\""));
+                        
+                        if (keyParam != null)
                         {
-                            var infoBox = new XElement("div",
-                                new XAttribute("class", "ai-context-box"),
-                                new XElement("strong", $"{info.OriginTitle}: "),
-                                new XElement("span", info.Excerpt)
-                            );
-                            macro.ReplaceWith(keyBadge, infoBox);
+                            var key = keyParam.InnerText?.Trim();
+                            
+                            if (!string.IsNullOrEmpty(key))
+                            {
+                                Console.WriteLine($"Processing requirement: {key}");
+                                
+                                // Look up the definition
+                                if (definitions.TryGetValue(key, out var info))
+                                {
+                                    // Create a simple text definition to insert AFTER the macro
+                                    var definitionHtml = new StringBuilder();
+                                    definitionHtml.Append($"<span class='requirement-definition' style='color: #0066cc; font-style: italic;'>");
+                                    definitionHtml.Append($" ({info.OriginTitle}");
+                                    
+                                    if (!string.IsNullOrEmpty(info.Excerpt))
+                                    {
+                                        // Clean the excerpt from HTML tags for simple display
+                                        var cleanExcerpt = Regex.Replace(info.Excerpt, "<[^>]+>", " ");
+                                        cleanExcerpt = Regex.Replace(cleanExcerpt, @"\s+", " ").Trim();
+                                        
+                                        // Limit length for readability
+                                        if (cleanExcerpt.Length > 150)
+                                        {
+                                            cleanExcerpt = cleanExcerpt.Substring(0, 150) + "...";
+                                        }
+                                        
+                                        definitionHtml.Append($": {cleanExcerpt}");
+                                    }
+                                    
+                                    definitionHtml.Append($")</span>");
+                                    
+                                    // Create a new node with the definition
+                                    var definitionNode = HtmlNode.CreateNode(definitionHtml.ToString());
+                                    
+                                    // Insert the definition AFTER the macro (keeping the macro)
+                                    macro.ParentNode.InsertAfter(definitionNode, macro);
+                                    
+                                    Console.WriteLine($"Added definition for requirement: {key}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Warning: No definition found for requirement {key}");
+                                }
+                            }
                         }
                         else
                         {
-                            macro.ReplaceWith(keyBadge);
+                            Console.WriteLine($"No key parameter found in macro");
                         }
                     }
                 }
+                else
+                {
+                    Console.WriteLine("No requirement macros found in HTML");
+                    
+                    // Debug: Print first 500 chars to see the structure
+                    Console.WriteLine($"HTML Preview: {html.Substring(0, Math.Min(500, html.Length))}");
+                }
 
-                var reader = root.CreateReader();
-                reader.MoveToContent();
-                var result = reader.ReadInnerXml();
+                // Get the enriched HTML
+                var enrichedHtml = htmlDoc.DocumentNode.OuterHtml;
 
                 // Save the enriched HTML to a file
                 try
                 {
-                    var serviceDirectory = Path.GetDirectoryName(typeof(ConfluenceService).Assembly.Location) ?? Directory.GetCurrentDirectory();
+                    var serviceDirectory = GetSourceDirectory();
                     var outputDirectory = Path.Combine(serviceDirectory, "ConfluenceOutput");
                     Directory.CreateDirectory(outputDirectory);
                     var htmlFilePath = Path.Combine(outputDirectory, $"enriched_page_{DateTime.Now:yyyyMMdd_HHmmss}.html");
-                    File.WriteAllText(htmlFilePath, result);
+                    File.WriteAllText(htmlFilePath, enrichedHtml);
                     Console.WriteLine($"Enriched HTML saved to: {htmlFilePath}");
                 }
                 catch (Exception fileEx)
@@ -227,37 +310,51 @@ namespace CorporateQABot.Core.Confluence
                     Console.WriteLine($"Error saving HTML file: {fileEx.Message}");
                 }
 
-                return result;
+                return enrichedHtml;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Injection Error: {ex.Message}");
-                return html;
+                Console.WriteLine($"Error in InjectDefinitionsIntoHtml: {ex.Message}");
+                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+                return html ?? string.Empty;
             }
         }
 
         private string ConvertToPlainText(string html, Dictionary<string, RequirementInfo> requirements)
         {
-            // Simple HTML to text conversion for LLM consumption
-            var text = Regex.Replace(html, "<[^>]+>", " ");
-            text = Regex.Replace(text, @"\s+", " ").Trim();
-
-            // Append requirements summary
-            if (requirements.Any())
-            {
-                text += "\n\n=== REQUIREMENTS DEFINITIONS ===\n";
-                foreach (var req in requirements)
-                {
-                    var cleanExcerpt = Regex.Replace(req.Value.Excerpt, "<[^>]+>", " ");
-                    cleanExcerpt = Regex.Replace(cleanExcerpt, @"\s+", " ").Trim();
-                    text += $"\n[{req.Key}] ({req.Value.OriginTitle}): {cleanExcerpt}";
-                }
-            }
+            // Decode HTML entities first
+            var decodedHtml = System.Net.WebUtility.HtmlDecode(html);
+            
+            // Remove script and style tags completely
+            decodedHtml = Regex.Replace(decodedHtml, @"<script[^>]*>[\s\S]*?</script>", " ", RegexOptions.IgnoreCase);
+            decodedHtml = Regex.Replace(decodedHtml, @"<style[^>]*>[\s\S]*?</style>", " ", RegexOptions.IgnoreCase);
+            
+            // Replace structural HTML tags with appropriate spacing/newlines
+            decodedHtml = Regex.Replace(decodedHtml, @"<br\s*/?>", "\n", RegexOptions.IgnoreCase);
+            decodedHtml = Regex.Replace(decodedHtml, @"</p>", "\n\n", RegexOptions.IgnoreCase);
+            decodedHtml = Regex.Replace(decodedHtml, @"</h[1-6]>", "\n\n", RegexOptions.IgnoreCase);
+            decodedHtml = Regex.Replace(decodedHtml, @"</li>", "\n", RegexOptions.IgnoreCase);
+            decodedHtml = Regex.Replace(decodedHtml, @"</tr>", "\n", RegexOptions.IgnoreCase);
+            decodedHtml = Regex.Replace(decodedHtml, @"</div>", "\n", RegexOptions.IgnoreCase);
+            decodedHtml = Regex.Replace(decodedHtml, @"</td>", " | ", RegexOptions.IgnoreCase);
+            decodedHtml = Regex.Replace(decodedHtml, @"</th>", " | ", RegexOptions.IgnoreCase);
+            
+            // Add extra spacing for requirement definitions
+            decodedHtml = Regex.Replace(decodedHtml, @"<div class='requirement-definition'", "\n\n--- REQUIREMENT DEFINITION ---\n<div class='requirement-definition'", RegexOptions.IgnoreCase);
+            
+            // Remove all remaining HTML tags
+            var text = Regex.Replace(decodedHtml, "<[^>]+>", " ");
+            
+            // Clean up whitespace while preserving intentional line breaks
+            text = Regex.Replace(text, @"[ \t]+", " "); // Multiple spaces/tabs to single space
+            text = Regex.Replace(text, @" *\n *", "\n"); // Trim spaces around newlines
+            text = Regex.Replace(text, @"\n{3,}", "\n\n"); // Max 2 consecutive newlines
+            text = text.Trim();
 
             // Save the plain text to a file
             try
             {
-                var serviceDirectory = Path.GetDirectoryName(typeof(ConfluenceService).Assembly.Location) ?? Directory.GetCurrentDirectory();
+                var serviceDirectory = GetSourceDirectory();
                 var outputDirectory = Path.Combine(serviceDirectory, "ConfluenceOutput");
                 Directory.CreateDirectory(outputDirectory);
                 var textFilePath = Path.Combine(outputDirectory, $"plain_text_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
@@ -270,6 +367,72 @@ namespace CorporateQABot.Core.Confluence
             }
 
             return text;
+        }
+
+        private static async Task<Dictionary<string, RequirementInfo>> GetRequirementsFromFileAsync(string resourcesDirectory)
+        {
+            var requirementsFilePath = Path.Combine(resourcesDirectory, "requirements.json");
+            var requirements = new Dictionary<string, RequirementInfo>();
+
+            if (File.Exists(requirementsFilePath))
+            {
+                var jsonContent = await File.ReadAllTextAsync(requirementsFilePath);
+                var json = JObject.Parse(jsonContent);
+                var reqs = json["requirements"];
+
+                if (reqs != null)
+                {
+                    foreach (var req in reqs)
+                    {
+                        var key = req["key"]?.ToString();
+                        var excerpt = req["htmlExcerpt"]?.ToString();
+                        var origin = req["origin"]?["title"]?.ToString();
+                        var destinationUrl = req["destinationUrl"]?.ToString();
+                        var status = req["status"]?.ToString();
+                        var reqSpaceKey = req["spaceKey"]?.ToString();
+
+                        if (!string.IsNullOrEmpty(key) && !requirements.ContainsKey(key))
+                        {
+                            var reqInfo = new RequirementInfo
+                            {
+                                Key = key,
+                                Excerpt = excerpt ?? string.Empty,
+                                OriginTitle = origin ?? string.Empty,
+                                DestinationUrl = destinationUrl ?? string.Empty,
+                                Status = status ?? "ACTIVE",
+                                SpaceKey = reqSpaceKey ?? string.Empty
+                            };
+
+                            // Extract properties (e.g., @ActorNameAr, @ActorNameEn, @Description)
+                            var properties = req["properties"];
+                            if (properties != null)
+                            {
+                                foreach (var prop in properties)
+                                {
+                                    var propKey = prop["key"]?.ToString();
+                                    var propValue = prop["value"]?.ToString();
+                                    if (!string.IsNullOrEmpty(propKey) && !string.IsNullOrEmpty(propValue))
+                                    {
+                                        // Clean HTML from property value
+                                        var cleanValue = Regex.Replace(propValue, "<[^>]+>", " ");
+                                        cleanValue = Regex.Replace(cleanValue, @"\s+", " ").Trim();
+                                        reqInfo.Properties[propKey] = cleanValue;
+                                    }
+                                }
+                            }
+
+                            requirements[key] = reqInfo;
+                        }
+                    }
+                }
+            }
+
+            return requirements;
+        }
+
+        private static string GetSourceDirectory([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+        {
+            return Path.GetDirectoryName(sourceFilePath) ?? Directory.GetCurrentDirectory();
         }
     }
 }

@@ -1,0 +1,1345 @@
+1. Use Case Properties
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Type 
+UseCase 
+
+
+
+
+
+| 
+
+
+Title
+
+
+
+
+| 
+
+
+Related
+
+
+
+
+| 
+Module | 
+
+
+
+
+
+
+
+DEFINITION 
+UC-353 
+
+(UC-Cancel Expert Support Request ( إصدار قرار العدول عن ندب الخبرة ): إصدار قرار العدول عن ندب الخبرة (Cancel Expert Support Request )) 
+
+
+
+
+| 
+
+
+إصدار قرار العدول عن ندب الخبرة  
+
+
+(Cancel Expert Support Request )
+
+
+
+
+| 
+
+
+
+
+Create 
+
+
+
+
+Jira 
+078f5cb7-a93b-3298-82de-d699ab4c4d1d 
+BJS-5488 
+
+
+
+| 
+
+| 
+
+
+
+
+
+
+2.   Use Case Specifications
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Description
+
+
+| 
+
+This use case should descript the process of creating Request  (العدول عن التصفية و رفع حجز )
+
+
+| 
+
+
+
+
+Primary Actor
+
+
+| 
+
+
+
+
+Link 
+LINK 
+ACT-008 
+
+(Actor Catalogue: Judge - قاضي - - إصدار الأوامر، القرارات، الاحكام - استعراض الطلبات - ارفاق المرفقات للطلبات - الاطلاع على المرفقات - رفض الطلبات - جميع الصلاحيات الم...) ,   
+Link 
+LINK 
+ACT-006 
+
+(Actor Catalogue: judicial circuit Secretary - امين سر الدائرة - - استعراض الطلبات - ارفاق المرفقات على الطلبات - إعادة الطلبات لقسم القيد والإحالة - الاطلاع على قائمة ...)  
+
+
+Hint : Judicial Circuit Secretary Can View Only result Without taking any Action 
+
+
+
+
+| 
+
+
+
+
+Triggering Event
+
+
+| 
+
+
+
+-
+
+
+| 
+
+
+
+
+Pre-Condition(s)
+
+
+| 
+
+
+
+There is previous  Expert Support Request Decsion    
+Link 
+LINK 
+UC-354 
+
+(UC-Expert Support Request (قرار ندب الخبرة ): قرار ندب الخبرة (Expert Support Request)) 
+
+
+Status Is not  in ( 
+
+
+
+
+
+
+
+
+Link 
+LINK 
+CASE-EXP-STS-011 
+
+(Expert Request Status حالات طلب ندب الخبرة: التقرير تحت مراجعة القاضي) 
+
+
+  
+Link 
+LINK 
+CASE-EXP-STS-014 
+
+(Expert Request Status حالات طلب ندب الخبرة: تم رفض التقرير من أحد أطراف الدعوى وإعادته للخبير) 
+
+
+
+
+Link 
+LINK 
+CASE-EXP-STS-013 
+
+(Expert Request Status حالات طلب ندب الخبرة: تم اعتماد التقرير تلقائيًا من النظام) 
+
+
+
+
+Link 
+LINK 
+CASE-EXP-STS-015 
+
+(Expert Request Status حالات طلب ندب الخبرة: تم رفع التقرير) 
+
+
+
+
+Link 
+LINK 
+CASE-EXP-STS-017 
+
+(Expert Request Status حالات طلب ندب الخبرة: تم إلغاء الطلب) 
+
+
+
+
+
+
+
+
+
+)
+
+
+This service will allow judge to cancel an expert request which is not yet in Report 
+review state (or final report or completed) 
+
+
+
+
+| 
+
+
+
+
+Post-Condition(s)
+
+
+| 
+Property Liquidation Withdrawal Request is Created Successfully  | 
+
+
+
+
+ 
+
+
+Basic Flow
+
+
+| 
+
+#
+
+
+| 
+
+Step
+
+
+| 
+Other Flows | 
+
+
+
+
+1
+
+| 
+
+
+
+User click on Button  (العدول عن ندب الخبرة ) From Process Flow screen    
+
+
+
+Or  
+
+
+كإجراء قضائى جديد من داخل طلبات التنفيذ 
+
+
+
+
+| 
+A1,E10  | 
+
+
+
+
+2
+
+| 
+
+
+
+System include ::  UC - Check user can access the resource 
+
+
+
+
+| 
+
+| 
+
+
+
+
+3
+
+| 
+
+
+System to Show Page   as Per data Wireframe Create Cancel Expert Request Decsion
+
+
+System to Show Set below Field value  
+
+
+
+execution request   رقم طلب التنفيذ
+
+expert Request IDرقم طلب ندب الخبرة
+
+
+
+
+| 
+E10 , E9, E7 | 
+
+
+
+
+4
+
+| 
+
+
+
+
+If Opend From الاجراءات القضائيه لطلب التنفيذ 
+
+
+
+User To select رقم طلب ندب الخبرة 
+
+
+Else If Open From Process Flow screen
+
+
+
+System to Populate Value=  Current Expert Request  & Dimmed Field 
+
+
+
+
+System to Show 
+
+
+
+expert Request Status حاله طلب ندب الخبرة 
+
+
+
+
+| 
+E10 , E9 | 
+
+
+
+
+5
+
+| 
+
+
+System  generate the Decsion text and allow judge to edit 
+
+Link 
+LINK 
+JDF-049 
+
+(نصوص النماذج: "قرار العدول عن ندب الخبرة") 
+ 
+
+
+
+
+| 
+
+| 
+
+
+
+
+6 
+
+| 
+
+
+User to Termination Reason , If Other is Selected "Free Text Area " will be Enable So uer Can Add his Reason 
+
+
+Hint : Show Only Active reason ( Reason to be revisted By BA and May be updated) 
+
+
+
+
+| 
+
+E6,E4
+
+
+| 
+
+
+
+
+9
+
+| 
+
+
+
+
+User to edit Decsion Text and Press  "اصدار القرار "  , System to show Confirmation Message 
+
+Link 
+LINK 
+MSG-665 
+
+(System Messages: Confirmation) 
+
+
+If User Confirm   ,   System to perform Below 
+
+
+
+Show messge   
+
+Link 
+LINK 
+MSG-358 
+
+(System Messages: Info)  
+
+
+update Cancel Expert Request Status  حالة طلب العدول عن  ندب الخبرة   
+
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-001 
+
+(Expert Request Status حالات طلب ندب الخبرة: تحت أجراء إنشاء طلب العدول عن ندب الخبير) 
+
+
+System to Save   Expert request Type   = 
+
+Link 
+LINK 
+EXP-ACT-002 
+
+(Expert Support Action Type: Cancel Expert Support Request) 
+
+
+
+
+
+| 
+
+E4, E5 ,E6,E7,E8,E9,E10
+
+
+| 
+
+
+
+
+10
+
+| 
+
+
+System to call " Cancel Expert Request  " As Per   Integartion Guid   and Send Fields as Mention in Paramter Mapping  
+
+
+If Sucess , System to Update 
+
+
+
+update Cancel Expert Request Status     حالة طلب العدول عن  ندب الخبرة   
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-002 
+
+(Expert Request Status حالات طلب ندب الخبرة: تم إنشاء طلب العدول عن ندب الخبير)
+
+update Expert Request Status     حالة'طلب ندب الخبرة  
+
+Link 
+LINK 
+CASE-EXP-STS-017 
+
+(Expert Request Status حالات طلب ندب الخبرة: تم إلغاء الطلب)  
+
+
+
+If failed
+
+
+
+Updated Cancel Expert Request Status   حالة طلب العدول عن  ندب الخبرة   
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-003 
+
+(Expert Request Status حالات طلب ندب الخبرة: فشل إنشاء طلب العدول عن ندب الخبير)  
+
+
+
+
+| 
+
+E1,E2,E3
+
+
+| 
+
+
+
+
+13
+
+
+
+| 
+
+
+
+
+System to send Nabaa SMS to selected Defendant  
+
+Link 
+LINK 
+MSG-159 
+
+(System Messages) 
+
+
+Make Sure Notification is Send To All Stack Holder including Representative IE أيضا التأكيد على أن التبليغ يكون لجميع أطراف طلب التنفيذ شاملا (طالب التنفيذ والمنفذ ضده الذي صدر اتجاه قرار ندب الخبرة)
+
+
+ وأيضا جميع الممثلين و الوكلاء و جميع المفوضين في حال وجد للطرفين       )
+
+
+
+
+| 
+
+| 
+
+
+
+
+15
+
+| 
+
+End
+
+| 
+
+| 
+
+
+
+
+Alternative Flows
+
+
+ 
+
+
+
+
+ 
+
+
+| 
+
+A1
+
+
+| 
+
+user Press Back 
+
+
+| 
+
+| 
+
+
+
+
+1
+
+
+| 
+
+
+  User can logout at anytime
+
+
+
+User clicks on "عودة" to get back to the main request page list     
+
+Link 
+LINK 
+MSG-058 
+
+(System Messages)       
+
+
+
+
+
+| 
+
+| 
+
+
+
+
+2
+
+
+| 
+
+End
+
+
+| 
+
+| 
+
+
+
+
+Exceptions
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+| 
+
+
+E1 : Technical error While Communicating with ESR
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+System failed to sent the request to ERS   or system received "failed response" From ERS .
+
+
+
+
+System will display  the following MSG > 
+Link 
+LINK 
+MSG-116 
+
+(System Messages: error) 
+
+
+| 
+
+| 
+
+
+
+
+E2 : Could not connect to the API
+
+
+| 
+
+| 
+
+
+
+
+
+System will retry for 10 times "3 times immediately and 7 times exponential polling" incase   System could not connect to the API
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E3: Error Returned from Service 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+System will raise exception input error  Same As Mention in ERS  Block   errorList  in the following cases :
+
+
+An error returned in errorList Parameter 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+  E4:   Must Add Reason text 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+  System will raise exception input error 
+
+Link 
+LINK 
+MSG-660 
+
+(System Messages: Error) 
+
+
+In  case User Select "other " from reason and Didnt Fill Reason text 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E5 : Missing input   data  
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+System will raise exception input error   
+
+Link 
+LINK 
+MSG-006 
+
+(UC-View Stop Deadline Extend Requests By Dispatch User: Error) 
+
+
+  if Missing mandatory Field 
+
+
+
+نص قرارالعدول عن  ندب الخبرة 
+
+سبب العدول 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E6 :     Invalid Length of  Reason text 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+  System will raise exception input error 
+
+Link 
+LINK 
+MSG-664 
+
+(System Messages: Error)  
+
+
+If Length Field "Other Reason" > 500 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E7 : Status of the execution order not allow to issue Cancel Expert Support Decsion 
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+System will raise exception input error     
+
+Link 
+LINK 
+MSG-146 
+
+(UC-List Support Requests By (Defendant / plaintiff )/ Delegates: Error)     in the following cases :
+
+
+
+in case execution order status in  (م سودة محذوفة-معاد لاستكمال النواقص -م حفوظ -تم التنفيذ- مغلق -     مقيد بانتظار الإحالة   -  م سودة )
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+E8: Expert Support  not allow to issue Cancel Expert Support Decsion 
+
+
+
+
+| 
+
+| 
+
+
+
+
+System will raise exception input error   
+
+Link 
+LINK 
+MSG-661 
+
+(System Messages: Error) 
+    in the following cases :
+
+
+This service will allow judge to cancel an expert request which is not yet in Report 
+review state (or final report or completed) 
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+E9: in Progress Cancel request For Same Expert Support request  | 
+
+| 
+
+
+
+
+
+System will raise exception input error   
+
+Link 
+LINK 
+MSG-662 
+
+(System Messages: Error) 
+    in the following cases :
+
+
+Cancekl expert request Status " For Same Expert request " = 
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-001 
+
+(Expert Request Status حالات طلب ندب الخبرة: تحت أجراء إنشاء طلب العدول عن ندب الخبير)  
+
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+E10 : Cancel request For Same Expert Support request  Already Done   | 
+
+| 
+
+
+
+
+
+System will raise exception input error   
+
+Link 
+LINK 
+MSG-663 
+
+(System Messages: Error) 
+    in the following cases :
+
+
+Cancekl expert request Status " For Same Expert request " = 
+Link 
+LINK 
+CANCEL-CASE-EXP-STS-002 
+
+(Expert Request Status حالات طلب ندب الخبرة: تم إنشاء طلب العدول عن ندب الخبير)
+
+
+
+
+| 
+
+| 
+
+
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+
+| 
+
+| 
+
+
+
+
+| 
+
+| 
+
+
+
+
+| 
+
+| 
+
+
+
+
+Business / System Rules
+
+
+| 
+
+
+
+
+Link 
+LINK 
+BR-404 
+
+(Business Rules) 
+
+Link 
+LINK 
+BR-405 
+
+(Business Rules) 
+
+Link 
+LINK 
+BR-406 
+
+(Business Rules) 
+
+Link 
+LINK 
+BR-407 
+
+(Business Rules) 
+
+Link 
+LINK 
+BR-408 
+
+(Business Rules)  
+
+
+
+
+| 
+
+| 
+
+
+
+Related Business Use Case (BRS/BC) | 
+
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+Wireframe | 
+
+
+Create Cancel Expert Request Decsion  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| 
+
+| 
+
+
+
+
+Parameters Mapping
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Field Name | 
+Field Source   | 
+Mapped Value    | 
+Static Value | 
+Validations / Comments  | 
+
+
+
+EXP-BO-CASE   | 
+
+
+
+
+ requestId
+
+
+| 
+Mapped Field   | 
+
+
+
+
+Link 
+LINK 
+EXPERT-REQUEST-ID 
+
+(UC-Expert Support Request (قرار ندب الخبرة ): 11) 
+Returned from  C reate Expert Request 
+
+
+
+
+| 
+
+| 
+
+| 
+
+
+
+
+cancel Reason 
+
+
+| 
+Mapped Field  | 
+
+سبب العدول Selected from Judge from 
+
+
+| 
+
+| 
+
+We Will Show Only  
+
+  With Status=Active 
+
+
+| 
+
+
+
+
+otherReason 
+
+
+| 
+Mapped Field | 
+أسباب أخرى as Entered from Judge  | 
+
+| 
+
+
+
+|

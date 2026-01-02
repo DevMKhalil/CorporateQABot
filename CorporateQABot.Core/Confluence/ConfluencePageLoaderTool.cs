@@ -21,7 +21,7 @@ namespace CorporateQABot.Core.Confluence
                          "Input should be the full Confluence Wiki URL. " +
                          "Returns the page content with all requirement definitions enriched and ready for analysis.")
         {
-            _confluenceService = new ConfluenceService("https://wiki.elm.sa", "");
+            _confluenceService = new ConfluenceService("https://wiki.elm.sa", "your_token_here");
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace CorporateQABot.Core.Confluence
                 // Format the result for the agent
                 var result = $@"# Wiki Page Information
 ## Full Page Content
-{context.PlainText}";
+{context}";
 
                 return result;
             }
