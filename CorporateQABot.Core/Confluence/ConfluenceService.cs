@@ -57,7 +57,7 @@ namespace CorporateQABot.Core.Confluence
             var enrichedHtml = InjectDefinitionsIntoHtml(rawHtml, requirements);
 
             // Step 4: Convert to plain text for LLM
-            var plainText = ConvertToPlainText(enrichedHtml, requirements);
+            //var plainText = ConvertToPlainText(enrichedHtml, requirements);
 
             //return plainText;
             return enrichedHtml;
@@ -90,7 +90,7 @@ namespace CorporateQABot.Core.Confluence
                 var response = await _httpClient.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
-                    var requirements = new Dictionary<string, RequirementInfo>();
+                    //var requirements = new Dictionary<string, RequirementInfo>();
                     var json = JObject.Parse(await response.Content.ReadAsStringAsync());
                     var reqs = json["requirements"];
 
@@ -104,7 +104,7 @@ namespace CorporateQABot.Core.Confluence
                             var status = req["status"]?.ToString();
                             var reqSpaceKey = req["spaceKey"]?.ToString();
 
-                            if (!string.IsNullOrEmpty(key) && !requirements.ContainsKey(key))
+                            if (!string.IsNullOrEmpty(key) && !result.ContainsKey(key))
                             {
                                 var reqInfo = new RequirementInfo
                                 {
@@ -188,7 +188,7 @@ namespace CorporateQABot.Core.Confluence
                                     }
                                 }
 
-                                requirements[key] = reqInfo;
+                                result[key] = reqInfo;
                             }
                         }
                     }
