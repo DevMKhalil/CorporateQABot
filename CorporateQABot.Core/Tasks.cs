@@ -1,4 +1,6 @@
-﻿using LangChain.Chains.StackableChains.Agents.Crew;
+﻿using CorporateQABot.Core.Confluence;
+using LangChain.Chains.StackableChains.Agents.Crew;
+using LangChain.Chains.StackableChains.Agents.Crew.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,32 +30,36 @@ namespace CorporateQABot.Core
 
         public static AgentTask AnalyzeRequirementsFromConfluence(
             CrewAgent agent,
-            string htmlContent)
+            string confluenceWikiURL)
         {
             return new AgentTask(
                 agent: agent,
+                tools: new List<CrewAgentTool> { new ConfluencePageLoaderTool() },
                 description: $@"
 **Task**: Extract and Structure Complete Requirements from Confluence Use Case Specification
 
 **Objective**: 
-Analyze the provided Confluence HTML use case specification document and extract ALL requirements with complete accuracy, zero information loss, and perfect traceability. Transform the raw specification into a structured, developer-ready requirements document that can be directly used by AI coding assistants for implementation.
+Use the `confluence_loader` tool to fetch and analyze the Confluence use case specification from the provided URL. The tool automatically retrieves the page content with all requirement definitions already enriched and cross-referenced, saving you from manual HTML parsing. Your job is to structure this pre-enriched content into a comprehensive, developer-ready requirements document.
 
-**Input Document Content**:
-```html
-{htmlContent}
-```
+**Tool Usage Instructions**:
+1. **Use the tool first**: Call `confluence_loader` with the Confluence Wiki URL to get the enriched page content
+2. **Leverage enriched data**: The tool provides requirement definitions (properties like ActorNameAr, ActorNameEn, Description with structured multivalues)
+3. **Trust the cross-references**: All requirement IDs (BR-XXX, MSG-XXX, ACT-XXX, STATUS-XXX) are already preserved and linked
+
+**Parameters**: 
+- Confluence Wiki URL: {confluenceWikiURL}
 
 **Your Analysis MUST Extract and Structure the Following Sections**:
 
 ### 1. **Use Case Overview**
-   - Use Case ID (e.g., UC-XXX) - extract the actual ID from the document
+   - Use Case ID (e.g., UC-XXX) - extract the actual ID from the enriched content
    - Title (in all available languages - typically Arabic and English)
    - Description/Purpose of the use case
    - Related JIRA tickets or tracking IDs (e.g., BJS-XXXX)
    - Module/Component/Domain information
    - Use case type and category
 
-### 2. **Actors and Permissions**
+### 2. **Actors and Permissions** ✨ *Tool provides structured actor data*
    - Primary Actors (with reference IDs like ACT-XXX)
    - Actor names in all available languages
    - Actor roles and responsibilities
@@ -183,8 +189,8 @@ Analyze the provided Confluence HTML use case specification document and extract
    - Accessibility requirements
    - Wireframe images or references (note their presence)
 
-### 13. **Status Management and State Transitions**
-   - All status codes (e.g., STATUS-XXX, CASE-EXP-STS-XXX, etc.)
+### 13. **Status Management and State Transitions** ✨ *Tool provides status codes with actor references*
+   - All status codes (e.g., STATUS-XXX, CASE-EXP-STS-XXX, CANCEL-CASE-EXP-STS-XXX, etc.)
    - Status names in all available languages
    - Status descriptions
    - Status transition rules (from status X to status Y)
@@ -206,7 +212,7 @@ Analyze the provided Confluence HTML use case specification document and extract
    - Notification priority
    - Retry policy for failed notifications
 
-### 15. **System Messages Catalog**
+### 15. **System Messages Catalog** ✨ *Tool provides message references with multilingual text*
    - All MSG-XXX or message references
    - Message category (Error, Info, Confirmation, Warning, Success)
    - Message severity/priority
@@ -249,7 +255,7 @@ Analyze the provided Confluence HTML use case specification document and extract
 **Output Format Requirements**:
 
 Your output MUST be structured as a clear, hierarchical document with:
-- **Section headers** for each category above (only include sections that have content in the input document)
+- **Section headers** for each category above (only include sections that have content in the enriched data)
 - **Bullet points** for lists
 - **Numbered steps** for flows (preserve original step numbers if present)
 - **Tables** for parameter mappings, field specifications, and structured data (use markdown or text format)
@@ -259,7 +265,7 @@ Your output MUST be structured as a clear, hierarchical document with:
 - **Inline notes** for clarifications or implicit requirements discovered during analysis
 
 **Critical Requirements**:
-1. ✅ **Zero Information Loss**: Extract EVERY detail, even seemingly minor ones like hints, notes, or inline comments
+1. ✅ **Zero Information Loss**: Extract EVERY detail from the tool's enriched output, even seemingly minor ones like hints, notes, or inline comments
 2. ✅ **Preserve Traceability**: Keep all reference IDs intact exactly as written (UC-XXX, BR-XXX, MSG-XXX, etc.)
 3. ✅ **Maintain Multilingual Text**: Do not translate or lose content in any language (especially Arabic, English, or others)
 4. ✅ **Explicit Edge Cases**: List all exception scenarios with their exact conditions and triggers
@@ -269,16 +275,18 @@ Your output MUST be structured as a clear, hierarchical document with:
 8. ✅ **Actionable Details**: Every requirement should be specific enough to implement or test
 
 **Intelligent Analysis Instructions**:
+- **Start with the tool**: Always call `confluence_loader` first to get the enriched content
 - **Identify implicit requirements**: If the specification implies a requirement without stating it explicitly, note it
 - **Detect patterns**: Recognize common patterns (e.g., CRUD operations, approval workflows, status machines)
 - **Flag ambiguities**: If something is unclear or contradictory, note it explicitly
 - **Suggest clarifications**: If critical information seems missing, note what should be clarified
 - **Preserve original numbering**: Keep step numbers, flow IDs, and reference IDs exactly as in source
-- **Extract from tables**: Parse HTML tables completely, preserving structure and relationships
+- **Extract from enriched data**: The tool has already parsed tables and structured data - use this advantage
 - **Handle nested structures**: Preserve hierarchical relationships in lists and tables
 
-**Quality Validation Checklist**:
+**Quality Validation Checklist** (leveraging tool enrichment):
 Before finalizing your output, systematically verify:
+- [ ] Called `confluence_loader` tool with the Confluence URL
 - [ ] All step numbers from Basic Flow are captured with their content
 - [ ] All exception flows are documented with their IDs, triggers, and steps
 - [ ] All alternative flows are documented with their IDs, triggers, and steps
@@ -292,11 +300,11 @@ Before finalizing your output, systematically verify:
 - [ ] API integration details include success and failure handling
 - [ ] UI/wireframe details are extracted
 - [ ] Notification requirements specify recipients and channels
-- [ ] Cross-references between sections are maintained
-- [ ] No section of the original document is ignored or skipped
+- [ ] Cross-references between sections are maintained (tool preserves these automatically)
+- [ ] No section of the enriched content is ignored or skipped
 
 **Expected Outcome**:
-A comprehensive, structured requirements document that a developer or AI coding assistant can use to implement the use case with 100% accuracy, covering all flows, validations, integrations, and edge cases without needing to refer back to the original HTML specification. The document should be self-contained, complete, and immediately actionable.
+A comprehensive, structured requirements document that a developer or AI coding assistant can use to implement the use case with 100% accuracy, covering all flows, validations, integrations, and edge cases without needing to refer back to the Confluence page specification. The document should be self-contained, complete, and immediately actionable.
 ");
         }
     }

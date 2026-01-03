@@ -21,22 +21,22 @@ namespace CorporateQABot.Core.Confluence
                          "Input should be the full Confluence Wiki URL. " +
                          "Returns the page content with all requirement definitions enriched and ready for analysis.")
         {
-            _confluenceService = new ConfluenceService("https://wiki.elm.sa", "your_token_here");
+            _confluenceService = new ConfluenceService("https://wiki.elm.sa", "");
         }
 
         /// <summary>
         /// Implements the abstract ToolTask method from CrewAgentTool.
         /// This is called when the agent uses this tool.
         /// </summary>
-        /// <param name="input">The Confluence Wiki URL to load</param>
+        /// <param name="confluenceWikiURL">The Confluence Wiki URL to load</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>The extracted page content with requirement definitions</returns>
-        public override async Task<string> ToolTask(string input, CancellationToken cancellationToken = default)
+        public override async Task<string> ToolTask(string confluenceWikiURL, CancellationToken cancellationToken = default)
         {
             try
             {
                 // Clean the input URL
-                var wikiUrl = input.Trim();
+                var wikiUrl = confluenceWikiURL.Trim();
 
                 if (string.IsNullOrWhiteSpace(wikiUrl))
                 {

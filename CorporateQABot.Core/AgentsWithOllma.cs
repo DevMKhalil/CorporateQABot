@@ -32,11 +32,15 @@ namespace CorporateQABot.Core
             // Use the Ollama Gemma model for this conversation with showing debug in console
             var llm = OllamaModelHelpers.OllamaGemmaModel.UseConsoleForDebug();
 
-            string htmlContent = await GetLatestEnrichedConfluenceHtml();
+            //string htmlContent = await GetLatestEnrichedConfluenceHtml();
+            string confluenceWikiURL = "https://wiki.elm.sa/spaces/BJS/pages/248936913";
 
             var myAgents = new Agents(llm);
             var agents = new List<CrewAgent> { myAgents.RequirementsAnalysisAgent };
-            var agentTasks = new List<AgentTask> { Tasks.AnalyzeRequirementsFromConfluence(myAgents.RequirementsAnalysisAgent, htmlContent) };
+            var agentTasks = new List<AgentTask> 
+            { 
+                Tasks.AnalyzeRequirementsFromConfluence(myAgents.RequirementsAnalysisAgent, confluenceWikiURL) 
+            };
             var crew = new Crew(agents, agentTasks);
             var runAsync = await crew.RunAsync();
         }
